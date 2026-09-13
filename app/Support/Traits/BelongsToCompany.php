@@ -8,6 +8,14 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Trait for models belonging to a company.
+ *
+ * @mixin \Illuminate\Database\Eloquent\Model
+ *
+ * @method static void creating(\Closure $callback)
+ * @method static void addGlobalScope(string|\Closure $scope, ?\Closure $implementation = null)
+ */
 trait BelongsToCompany
 {
     /**
