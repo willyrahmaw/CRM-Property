@@ -19,7 +19,7 @@ class ImageOptimizerServiceTest extends TestCase
         $path = $service->convertToWebp($file, 'test/images', 'public', 80, 1920);
 
         $this->assertStringEndsWith('.webp', $path);
-        Storage::disk('public')->assertExists($path);
+        $this->assertTrue(Storage::disk('public')->exists($path));
 
         $contents = Storage::disk('public')->get($path);
         // Cek header magic bytes WebP: 'RIFF....WEBP'
@@ -38,7 +38,7 @@ class ImageOptimizerServiceTest extends TestCase
         $path = $service->convertToWebp($file, 'test/images', 'public', 80, 1200);
 
         $this->assertStringEndsWith('.webp', $path);
-        Storage::disk('public')->assertExists($path);
+        $this->assertTrue(Storage::disk('public')->exists($path));
 
         $contents = Storage::disk('public')->get($path);
         $image = imagecreatefromstring($contents);

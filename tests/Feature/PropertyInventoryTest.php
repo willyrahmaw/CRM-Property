@@ -99,7 +99,7 @@ class PropertyInventoryTest extends TestCase
         $unit = PropertyUnit::where('unit_number', 'B-09')->first();
         $this->assertNotNull($unit);
         $this->assertNotNull($unit->image);
-        Storage::disk('public')->assertExists($unit->image);
+        $this->assertTrue(Storage::disk('public')->exists($unit->image));
     }
 
     public function test_unit_creation_with_complete_physical_and_building_specifications(): void
@@ -251,7 +251,7 @@ class PropertyInventoryTest extends TestCase
         $this->assertCount(2, $cluster->photos);
 
         foreach ($cluster->photos as $path) {
-            Storage::disk('public')->assertExists($path);
+            $this->assertTrue(Storage::disk('public')->exists($path));
             $this->assertStringEndsWith('.webp', $path);
         }
     }
@@ -296,8 +296,8 @@ class PropertyInventoryTest extends TestCase
         $this->assertNotContains($photo1Path, $cluster->photos);
         $this->assertContains($photo2Path, $cluster->photos);
 
-        Storage::disk('public')->assertMissing($photo1Path);
-        Storage::disk('public')->assertExists($photo2Path);
+        $this->assertFalse(Storage::disk('public')->exists($photo1Path));
+        $this->assertTrue(Storage::disk('public')->exists($photo2Path));
     }
 }
 
