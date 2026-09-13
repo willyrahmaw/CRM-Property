@@ -412,8 +412,10 @@
                                     id="password"
                                     required
                                     placeholder="Minimal 8 karakter"
+                                    autocomplete="new-password"
                                     class="w-full pl-9 pr-3 py-2 bg-white border border-[#E8E4DA] rounded-lg text-xs text-[#161616] placeholder-[#79766F] focus:outline-none focus:border-[#B89B5E] focus:ring-1 focus:ring-[#B89B5E]">
                             </div>
+                            <p class="text-[10px] text-[#79766F] mt-1">Standar keamanan: Minimal 8 karakter.</p>
                             @error('password')
                                 <p class="text-xs text-[#991B1B] mt-1">{{ $message }}</p>
                             @enderror

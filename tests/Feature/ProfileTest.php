@@ -154,4 +154,26 @@ class ProfileTest extends TestCase
         $this->assertFalse(Hash::check('newSecretPassword2026', $this->user->password));
         $this->assertTrue(Hash::check('password123', $this->user->password));
     }
+
+    public function test_user_cannot_update_password_with_less_than_8_characters(): void
+    {
+        $response = $this->actingAs($this->user)->put(route('profile.password.update'), [
+            'current_password' => 'password123',
+            'password' => 'short',
+            'password_confirmation' => 'short',
+        ]);
+
+        $response->assertSessionHasErrors('password');
+    }
+
+    public function test_user_cannot_update_password_with_mismatched_confirmation(): void
+    {
+        $response = $this->actingAs($this->user)->put(route('profile.password.update'), [
+            'current_password' => 'password123',
+            'password' => 'standardPassword123',
+            'password_confirmation' => 'differentPassword123',
+        ]);
+
+        $response->assertSessionHasErrors('password');
+    }
 }

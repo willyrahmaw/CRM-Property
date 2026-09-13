@@ -28,6 +28,22 @@ class UpdatePasswordRequest extends FormRequest
     }
 
     /**
+     * Custom validation messages in Indonesian.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'current_password.required' => 'Kata sandi saat ini wajib diisi.',
+            'current_password.current_password' => 'Kata sandi saat ini tidak cocok dengan data akun Anda.',
+            'password.required' => 'Kata sandi baru wajib diisi.',
+            'password.min' => 'Kata sandi baru minimal terdiri dari :min karakter.',
+            'password.confirmed' => 'Konfirmasi kata sandi baru tidak cocok.',
+        ];
+    }
+
+    /**
      * Custom validation attribute names in Indonesian.
      */
     public function attributes(): array
