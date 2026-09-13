@@ -212,3 +212,57 @@ aside ::-webkit-scrollbar-thumb:hover {
     background-color: #FFFFFF;
     border-top: 1px solid #E8E4DA;
 }
+
+/* ==========================================================================
+   Mobile Responsive Enhancements & Touch Targets
+   ========================================================================== */
+
+@media (max-width: 640px) {
+    .prop-table {
+        min-width: 600px;
+    }
+
+    .prop-table th {
+        padding: 0.625rem 0.875rem;
+        font-size: 0.625rem; /* 10px */
+    }
+
+    .prop-table td {
+        padding: 0.625rem 0.875rem;
+        font-size: 0.75rem; /* 12px */
+    }
+
+    .prop-table-pagination {
+        padding: 0.625rem 0.875rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* SweetAlert2 Mobile Responsiveness */
+@media (max-width: 480px) {
+    .swal2-popup {
+        width: 92% !important;
+        padding: 1.25rem 1rem !important;
+        border-radius: 0.75rem !important;
+    }
+
+    .swal2-title {
+        font-size: 1.125rem !important;
+    }
+
+    .swal2-html-container {
+        font-size: 0.8125rem !important;
+    }
+
+    .swal2-actions {
+        width: 100% !important;
+        flex-direction: column-reverse !important;
+        gap: 0.5rem !important;
+    }
+
+    .swal2-actions button {
+        width: 100% !important;
+        margin: 0 !important;
+        min-height: 2.625rem !important;
+    }
+}

@@ -11,12 +11,12 @@
     </x-page-header>
 
     <!-- Horizontal Kanban Board -->
-    <div class="flex space-x-4 overflow-x-auto pb-6 select-none" style="min-height: calc(100vh - 220px);">
+    <div class="flex space-x-3 sm:space-x-4 overflow-x-auto pb-6 select-none snap-x snap-mandatory" style="min-height: calc(100vh - 220px); -webkit-overflow-scrolling: touch;">
         @foreach ($stages as $stage)
             @php
                 $stageLeads = $leadsByStage->get($stage->value, collect());
             @endphp
-            <div class="w-80 flex-shrink-0 flex flex-col bg-[#F7F6F2] rounded-xl border border-[#E8E4DA] overflow-hidden">
+            <div class="w-[82vw] sm:w-80 flex-shrink-0 flex flex-col bg-[#F7F6F2] rounded-xl border border-[#E8E4DA] overflow-hidden snap-start">
                 <!-- Column Header -->
                 <div class="px-4 py-3 bg-white border-b border-[#E8E4DA] flex items-center justify-between">
                     <div class="flex items-center space-x-2">

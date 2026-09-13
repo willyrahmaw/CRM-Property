@@ -5,8 +5,10 @@ import { initTabs } from './modules/tabs.js';
 import { initSearchableSelects } from './modules/searchable-select.js';
 import { initBookingForm } from './modules/booking.js';
 import { initCommissionSettings } from './modules/commission-settings.js';
+import { initMobileMenu } from './modules/mobile-menu.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+    initMobileMenu();
     initTabs();
     initSearchableSelects();
     initBookingForm();

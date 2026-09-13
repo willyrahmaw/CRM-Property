@@ -48,7 +48,7 @@
     <!-- Main Siteplan Stage & Inspection Drawer Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <!-- Siteplan Visualizer Canvas / Grid -->
-        <div class="lg:col-span-3 bg-white p-6 rounded-xl border border-[#E8E4DA] shadow-xs min-h-[500px]" id="siteplan-interactive-wrapper">
+        <div class="lg:col-span-3 bg-white p-4 sm:p-6 rounded-xl border border-[#E8E4DA] shadow-xs min-h-[500px]" id="siteplan-interactive-wrapper">
             @forelse ($project->clusters as $cluster)
                 <div class="mb-8 last:mb-0">
                     <div class="flex items-center justify-between pb-2 mb-4 border-b border-[#E8E4DA]">
@@ -59,7 +59,7 @@
                     </div>
 
                     <!-- Unit Blocks Grid -->
-                    <div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2.5">
+                    <div class="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-8 gap-2 sm:gap-2.5">
                         @foreach ($cluster->propertyUnits as $unit)
                             <button type="button"
                                     data-unit-id="{{ $unit->id }}"
