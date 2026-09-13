@@ -12,7 +12,7 @@
   <img src="https://img.shields.io/badge/PHP-8.3%2B-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP 8.3" />
   <img src="https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
   <img src="https://img.shields.io/badge/Vite-8.x-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
-  <img src="https://img.shields.io/badge/Tests-98%20Passed%20(442%20Assertions)-15803D?style=for-the-badge&logo=githubactions&logoColor=white" alt="Tests Passed" />
+  <img src="https://img.shields.io/badge/Tests-100%20Passed%20(448%20Assertions)-15803D?style=for-the-badge&logo=githubactions&logoColor=white" alt="Tests Passed" />
   <img src="https://img.shields.io/badge/License-Proprietary-161616?style=for-the-badge" alt="License" />
 </p>
 
@@ -241,8 +241,8 @@ php artisan test
 
 Hasil:
 ```text
-Pass: 98 passed, 442 assertions
-Duration: ~4.3s
+Pass: 100 passed, 448 assertions
+Duration: ~4.5s
 ```
 
 ---

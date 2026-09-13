@@ -134,7 +134,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/payments/{payment}/verify', [PaymentController::class, 'verify'])->name('payments.verify')->middleware('role:finance_team');
 
         Route::get('/mortgages', [MortgageController::class, 'index'])->name('mortgages.index')->middleware('role:finance_team');
+        Route::get('/mortgages/create', [MortgageController::class, 'create'])->name('mortgages.create')->middleware('role:finance_team');
         Route::post('/mortgages', [MortgageController::class, 'store'])->name('mortgages.store')->middleware('role:finance_team');
+        Route::get('/mortgages/{mortgage}/edit', [MortgageController::class, 'edit'])->name('mortgages.edit')->middleware('role:finance_team');
         Route::patch('/mortgages/{mortgage}', [MortgageController::class, 'update'])->name('mortgages.update')->middleware('role:finance_team');
 
         Route::get('/commissions', [CommissionController::class, 'index'])->name('commissions.index');

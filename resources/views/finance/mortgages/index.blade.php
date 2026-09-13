@@ -2,6 +2,9 @@
     <x-page-header
         title="Manajemen KPR & Akad Kredit"
         subtitle="Monitoring status pengajuan pembiayaan bank konsumen, proses SP3K, hingga realisasi akad kredit.">
+        <x-button variant="primary" size="sm" icon="fa-solid fa-plus" :href="route('finance.mortgages.create')">
+            Daftarkan KPR Baru
+        </x-button>
     </x-page-header>
 
     <!-- Top Metric Stat Cards -->
@@ -30,87 +33,6 @@
             icon="fa-solid fa-handshake"
             helper="Realisasi pembiayaan" />
     </div>
-
-    <!-- Eligible Booking Quick Register Card (If Any) -->
-    @if ($eligibleBookings->isNotEmpty())
-        <div class="mb-6">
-            <details class="group bg-white rounded-xl border border-[#E8E4DA] p-4 shadow-xs">
-                <summary class="flex items-center justify-between cursor-pointer font-bold text-xs text-[#161616] uppercase tracking-wider select-none">
-                    <div class="flex items-center gap-2">
-                        <span class="w-6 h-6 rounded-full bg-[#DCFCE7] text-[#15803D] flex items-center justify-center text-xs">
-                            <i class="fa-solid fa-plus"></i>
-                        </span>
-                        <span>Daftarkan Pengajuan KPR Baru (Tersedia {{ $eligibleBookings->count() }} Booking Skema KPR)</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-down text-[#79766F] transition-transform duration-200 group-open:rotate-180"></i>
-                </summary>
-
-                <form action="{{ route('finance.mortgages.store') }}" method="POST" class="mt-4 pt-4 border-t border-[#E8E4DA] space-y-4">
-                    @csrf
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-[#161616] mb-1">Pilih Transaksi Booking <span class="text-[#991B1B]">*</span></label>
-                            <select name="booking_id" required class="w-full px-3 py-2 text-xs rounded-lg border border-[#E8E4DA] bg-white text-[#161616] focus:outline-none focus:border-[#B89B5E]">
-                                <option value="">-- Pilih Transaksi --</option>
-                                @foreach ($eligibleBookings as $elig)
-                                    <option value="{{ $elig->id }}">
-                                        {{ $elig->booking_number }} — {{ $elig->customer->name }} (Unit {{ $elig->propertyUnit->unit_number }})
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-semibold text-[#161616] mb-1">Bank Rekanan KPR <span class="text-[#991B1B]">*</span></label>
-                            <input type="text" name="bank_name" required placeholder="Contoh: Bank BCA / Mandiri / BTN" class="w-full px-3 py-2 text-xs rounded-lg border border-[#E8E4DA] bg-white text-[#161616] focus:outline-none focus:border-[#B89B5E]">
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-semibold text-[#161616] mb-1">Plafon Diajukan (Rp) <span class="text-[#991B1B]">*</span></label>
-                            <input type="number" name="submission_amount" required placeholder="Contoh: 850000000" class="w-full px-3 py-2 text-xs rounded-lg border border-[#E8E4DA] bg-white text-[#161616] focus:outline-none focus:border-[#B89B5E]">
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-[#161616] mb-1">Tenor (Tahun) <span class="text-[#991B1B]">*</span></label>
-                            <input type="number" name="tenor_years" value="15" required class="w-full px-3 py-2 text-xs rounded-lg border border-[#E8E4DA] bg-white text-[#161616] focus:outline-none focus:border-[#B89B5E]">
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-semibold text-[#161616] mb-1">Suku Bunga (% p.a)</label>
-                            <input type="number" step="0.01" name="interest_rate" placeholder="Contoh: 6.50" class="w-full px-3 py-2 text-xs rounded-lg border border-[#E8E4DA] bg-white text-[#161616] focus:outline-none focus:border-[#B89B5E]">
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-semibold text-[#161616] mb-1">Tahap Awal <span class="text-[#991B1B]">*</span></label>
-                            <select name="status" required class="w-full px-3 py-2 text-xs rounded-lg border border-[#E8E4DA] bg-white text-[#161616] focus:outline-none focus:border-[#B89B5E]">
-                                @foreach ($statuses as $st)
-                                    <option value="{{ $st->value }}">{{ $st->label() }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-semibold text-[#161616] mb-1">Tanggal Masuk Berkas</label>
-                            <input type="date" name="application_date" value="{{ date('Y-m-d') }}" class="w-full px-3 py-2 text-xs rounded-lg border border-[#E8E4DA] bg-white text-[#161616] focus:outline-none focus:border-[#B89B5E]">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-semibold text-[#161616] mb-1">Catatan Tambahan</label>
-                        <input type="text" name="notes" placeholder="Contoh: Berkas slip gaji & mutasi rekening sudah lengkap, diurus oleh Sales PIC" class="w-full px-3 py-2 text-xs rounded-lg border border-[#E8E4DA] bg-white text-[#161616] focus:outline-none focus:border-[#B89B5E]">
-                    </div>
-
-                    <div class="flex justify-end">
-                        <x-button type="submit" variant="primary" size="sm" icon="fa-solid fa-paper-plane">
-                            Simpan Pengajuan KPR
-                        </x-button>
-                    </div>
-                </form>
-            </details>
-        </div>
-    @endif
 
     <!-- Filter Bar -->
     <x-card class="mb-6">
@@ -158,7 +80,13 @@
             <x-empty-state
                 icon="fa-solid fa-landmark"
                 title="Belum ada data pengajuan KPR"
-                message="Data pengajuan KPR bank dan status akad kredit konsumen akan tampil di sini untuk dikelola oleh tim Finance." />
+                message="Data pengajuan KPR bank dan status akad kredit konsumen akan tampil di sini untuk dikelola oleh tim Finance.">
+                <div class="mt-4">
+                    <x-button variant="primary" size="sm" icon="fa-solid fa-plus" :href="route('finance.mortgages.create')">
+                        Daftarkan Pengajuan KPR
+                    </x-button>
+                </div>
+            </x-empty-state>
         @else
             <x-table>
                 <thead>
@@ -170,7 +98,7 @@
                         <th>Tenor & Bunga</th>
                         <th>Status KPR</th>
                         <th>Tanggal SP3K & Akad</th>
-                        <th class="action-col">Update Progres & Akad</th>
+                        <th class="action-col">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -251,73 +179,11 @@
                                 </div>
                             </td>
                             <td class="action-col">
-                                <details class="relative inline-block text-left">
-                                    <summary class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-[#161616] hover:bg-[#262626] text-white text-xs font-semibold cursor-pointer transition-colors select-none">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                        <span>Update KPR</span>
-                                    </summary>
-
-                                    <!-- Update Popover Form -->
-                                    <div class="absolute right-0 mt-2 w-80 sm:w-96 p-4 bg-white rounded-xl border border-[#E8E4DA] shadow-xl z-50 text-left">
-                                        <div class="flex items-center justify-between pb-2 mb-3 border-b border-[#E8E4DA]">
-                                            <span class="font-bold text-xs text-[#161616] uppercase">Update Status & Akad KPR</span>
-                                            <span class="text-[10px] text-[#79766F] font-bold">{{ $mortgage->bank_name }}</span>
-                                        </div>
-
-                                        <form action="{{ route('finance.mortgages.update', $mortgage) }}" method="POST" class="space-y-3 text-xs">
-                                            @csrf
-                                            @method('PATCH')
-
-                                            <input type="hidden" name="bank_name" value="{{ $mortgage->bank_name }}">
-                                            <input type="hidden" name="submission_amount" value="{{ $mortgage->submission_amount }}">
-                                            <input type="hidden" name="tenor_years" value="{{ $mortgage->tenor_years }}">
-
-                                            <div>
-                                                <label class="block font-semibold text-[#161616] mb-1">Status Tahapan KPR</label>
-                                                <select name="status" class="w-full px-2.5 py-1.5 rounded border border-[#E8E4DA] bg-white text-[#161616] font-semibold">
-                                                    @foreach ($statuses as $st)
-                                                        <option value="{{ $st->value }}" {{ $mortgage->status === $st ? 'selected' : '' }}>
-                                                            {{ $st->label() }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-
-                                            <div class="grid grid-cols-2 gap-2">
-                                                <div>
-                                                    <label class="block font-semibold text-[#161616] mb-1">Plafon Disetujui (Rp)</label>
-                                                    <input type="number" name="approved_amount" value="{{ $mortgage->approved_amount ?? $mortgage->submission_amount }}" class="w-full px-2 py-1 rounded border border-[#E8E4DA] bg-white text-[#161616]">
-                                                </div>
-                                                <div>
-                                                    <label class="block font-semibold text-[#161616] mb-1">Suku Bunga (%)</label>
-                                                    <input type="number" step="0.01" name="interest_rate" value="{{ $mortgage->interest_rate }}" placeholder="6.50" class="w-full px-2 py-1 rounded border border-[#E8E4DA] bg-white text-[#161616]">
-                                                </div>
-                                            </div>
-
-                                            <div class="grid grid-cols-2 gap-2">
-                                                <div>
-                                                    <label class="block font-semibold text-[#161616] mb-1">Tanggal SP3K</label>
-                                                    <input type="date" name="sp3k_date" value="{{ $mortgage->sp3k_date?->toDateString() }}" class="w-full px-2 py-1 rounded border border-[#E8E4DA] bg-white text-[#161616]">
-                                                </div>
-                                                <div>
-                                                    <label class="block font-semibold text-[#161616] mb-1">Tanggal Akad Kredit</label>
-                                                    <input type="date" name="contract_date" value="{{ $mortgage->contract_date?->toDateString() }}" class="w-full px-2 py-1 rounded border border-[#E8E4DA] bg-white text-[#161616]">
-                                                </div>
-                                            </div>
-
-                                            <div>
-                                                <label class="block font-semibold text-[#161616] mb-1">Catatan KPR / Perbankan</label>
-                                                <textarea name="notes" rows="2" placeholder="Catatan progress..." class="w-full px-2 py-1 rounded border border-[#E8E4DA] bg-white text-[#161616]">{{ $mortgage->notes }}</textarea>
-                                            </div>
-
-                                            <div class="flex justify-end pt-1">
-                                                <x-button type="submit" variant="primary" size="sm" icon="fa-solid fa-save">
-                                                    Simpan Pembaruan
-                                                </x-button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </details>
+                                <a href="{{ route('finance.mortgages.edit', $mortgage) }}"
+                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#161616] hover:bg-[#262626] text-white text-xs font-semibold transition-colors whitespace-nowrap">
+                                    <i class="fa-solid fa-pen-to-square text-[#B89B5E]"></i>
+                                    <span>Update KPR & Akad</span>
+                                </a>
                             </td>
                         </tr>
                     @endforeach

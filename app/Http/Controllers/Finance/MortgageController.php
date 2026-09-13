@@ -98,6 +98,48 @@ class MortgageController extends Controller
         ]);
     }
 
+    public function create(Request $request): View
+    {
+        $companyId = $request->user()->company_id;
+
+        $eligibleBookings = Booking::query()
+            ->where('payment_scheme', PaymentScheme::KPR)
+            ->when($companyId, fn ($q) => $q->where('company_id', $companyId))
+            ->whereDoesntHave('mortgage')
+            ->with(['customer', 'propertyUnit.cluster.project', 'sales'])
+            ->latest()
+            ->get();
+
+        $preselectedBookingId = $request->query('booking_id');
+
+        return view('finance.mortgages.create', [
+            'eligibleBookings' => $eligibleBookings,
+            'preselectedBookingId' => $preselectedBookingId,
+            'statuses' => MortgageStatus::cases(),
+        ]);
+    }
+
+    public function edit(Mortgage $mortgage, Request $request): View
+    {
+        $companyId = $request->user()->company_id;
+
+        if ($companyId && $mortgage->booking->company_id !== $companyId) {
+            abort(403, 'Akses tidak sah ke data pengajuan KPR.');
+        }
+
+        $mortgage->load([
+            'booking.customer',
+            'booking.propertyUnit.cluster.project',
+            'booking.sales',
+            'booking.payments',
+        ]);
+
+        return view('finance.mortgages.edit', [
+            'mortgage' => $mortgage,
+            'statuses' => MortgageStatus::cases(),
+        ]);
+    }
+
     public function store(StoreMortgageRequest $request): RedirectResponse
     {
         $booking = Booking::findOrFail($request->booking_id);

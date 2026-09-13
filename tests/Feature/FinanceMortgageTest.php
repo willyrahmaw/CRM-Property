@@ -176,4 +176,22 @@ class FinanceMortgageTest extends TestCase
             'status' => MortgageStatus::CONTRACT_SIGNED->value,
         ]);
     }
+
+    public function test_finance_can_view_create_page(): void
+    {
+        $response = $this->actingAs($this->finance)->get(route('finance.mortgages.create'));
+
+        $response->assertStatus(200);
+        $response->assertSee('Daftarkan Pengajuan KPR Baru');
+    }
+
+    public function test_finance_can_view_edit_page(): void
+    {
+        $response = $this->actingAs($this->finance)->get(route('finance.mortgages.edit', $this->mortgage));
+
+        $response->assertStatus(200);
+        $response->assertSee('Formulir Pembaruan Progres KPR');
+        $response->assertSee('Bank Mandiri');
+        $response->assertSee('Budi Santoso');
+    }
 }
