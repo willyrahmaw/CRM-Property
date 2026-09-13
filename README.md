@@ -5,17 +5,40 @@
 </p>
 
 <p align="center">
+  <a href="https://property.willyrw.my.id" target="_blank">
+    <img src="https://img.shields.io/badge/Live_Demo-property.willyrw.my.id-B89B5E?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Live Demo" />
+  </a>
   <img src="https://img.shields.io/badge/Laravel-12.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel 12" />
   <img src="https://img.shields.io/badge/PHP-8.3%2B-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP 8.3" />
   <img src="https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
   <img src="https://img.shields.io/badge/Vite-8.x-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
-  <img src="https://img.shields.io/badge/Tests-85%20Passed-15803D?style=for-the-badge&logo=githubactions&logoColor=white" alt="Tests Passed" />
-  <img src="https://img.shields.io/badge/License-Proprietary-B89B5E?style=for-the-badge" alt="License" />
+  <img src="https://img.shields.io/badge/Tests-94%20Passed%20(431%20Assertions)-15803D?style=for-the-badge&logo=githubactions&logoColor=white" alt="Tests Passed" />
+  <img src="https://img.shields.io/badge/License-Proprietary-161616?style=for-the-badge" alt="License" />
 </p>
+
+---
+
+### 🌐 Akses Live Demo Online
+
+Sistem telah aktif dan siap diuji coba secara langsung pada server produksi:
+
+> 🔗 **Tautan Demo**: **[https://property.willyrw.my.id](https://property.willyrw.my.id)**  
+> 🔑 **Kata Sandi Semua Akun**: **`CrmProperty123!`**
+
+| Peran (Role) | Alamat Email | Fokus Akses Pengujian |
+| :--- | :--- | :--- |
+| **Company Owner** | `owner@propflow.local` | Full control: Eksekutif dashboard, konfigurasi skema komisi, persetujuan diskon tinggi |
+| **Sales Manager** | `manager@propflow.local` | Pipeline CRM, supervisi leads seluruh tim, persetujuan diskon standar, rekap survei |
+| **Finance / Kasir** | `finance@propflow.local` | Verifikasi bukti transfer konsumen, approval SPP booking, verifikasi akad KPR & komisi |
+| **Admin Property** | `admin@propflow.local` | Manajemen master proyek kawasan, multi-foto cluster, inventori unit fisik & siteplan |
+| **Team Leader** | `fajar@propflow.local` | Monitoring target penjualan tim, distribusi leads, evaluasi aktivitas follow-up sales |
+| **Sales Agent** | `andi@propflow.local` | 1-Click WhatsApp chat, booking unit (anti-double booking), pengajuan diskon & visit |
+
+---
 
 **PROPFlow** adalah platform enterprise *Property Sales CRM & Real Estate Inventory Management* yang dirancang khusus untuk pengembang properti (*property developers*), agensi pemasaran, tim penjualan, sales manager, dan tim keuangan. 
 
-Dibangun dengan filosofi desain **Luxury Corporate Minimalist** berpalet solid elegan (*Gold Accent, Deep Charcoal, Soft Cream* — tanpa gradien) serta arsitektur backend Laravel yang tangguh, aman, dan siap pakai untuk produksi skala besar.
+Dibangun dengan filosofi desain **Luxury Corporate Minimalist** berpalet solid elegan (*Gold Accent `#B89B5E`, Deep Charcoal `#161616`, Soft Cream `#F7F6F2`* — tanpa gradien) serta arsitektur backend Laravel yang tangguh, aman, dan siap pakai untuk produksi skala besar.
 
 ---
 
@@ -77,7 +100,12 @@ Dibangun dengan filosofi desain **Luxury Corporate Minimalist** berpalet solid e
 - **Quick Switcher Topbar**: Pengalihan zona waktu secara instan dengan dropdown interaktif 1-klik di header navigasi utama.
 - **Sinkronisasi Waktu Otomatis**: Middleware `SetUserTimezone` secara cerdas menyesuaikan waktu pencatatan jadwal survei lokasi, riwayat aktivitas prospek, dan audit log sesuai zona waktu pengguna aktif.
 
-### 10. 🛡️ Keamanan Enterprise & Isolasi Multi-Tenant
+### 10. 💬 1-Click WhatsApp Direct Connect & Salutation Intelligence
+- **Tanpa Simpan Nomor**: Sales agent dapat langsung menyapa prospek dan konsumen ke WhatsApp via tautan `wa.me` hanya dengan 1 kali klik dari Pipeline Kanban, Detail Prospek, Tabel Transaksi, hingga Jadwal Survei.
+- **Deteksi Sapaan Otomatis (Gender-Aware)**: Sinkronisasi data jenis kelamin (`male` → *Bapak*, `female` → *Ibu*) yang secara otomatis memformat salam pembuka ramah, profesional, dan sopan.
+- **Template Percakapan Terstruktur**: Otomatis menghasilkan draf pesan konteks bisnis (Follow-up prospek baru, konfirmasi jadwal visit lokasi, notifikasi persetujuan SPP booking unit, dan tindak lanjut pembayaran).
+
+### 11. 🛡️ Keamanan Enterprise & Isolasi Multi-Tenant
 - **Multi-Tenant Ready**: Setiap data terikat ke `company_id` yang divalidasi server-side (mencegah IDOR/BOLA).
 - **Private Storage**: Dokumen sensitif konsumen (KTP, NPWP, KK, Slip Gaji) disimpan di *Private Storage*, hanya dapat diunduh oleh pengguna berwenang.
 - **Role-Based Access Control (RBAC)**: Pembatasan akses berbasis peran di tingkat Middleware dan Policy.
@@ -115,35 +143,32 @@ Dibangun dengan filosofi desain **Luxury Corporate Minimalist** berpalet solid e
 ## ⚙️ Persyaratan Sistem (Prerequisites)
 
 - **PHP**: Versi `>= 8.3` dengan ekstensi: `pdo`, `pdo_mysql`, `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`, `json`, `gd` (dengan dukungan WebP).
-- **Composer**: Versi `>= 2.2`
-- **Node.js**: Versi `>= 18.x` & **NPM**
+- **Composer**: Versi `>= 2.x`
+- **Node.js & NPM**: Versi `>= 20.x` (opsional jika menggunakan build asset yang telah disertakan di repository)
 - **Database**: MySQL `>= 8.0` / MariaDB `>= 10.5`
 
 ---
 
-## 🚀 Panduan Instalasi & Menjalankan
+## 🚀 Panduan Instalasi Lokal
 
 ### 1. Kloning Repositori
 ```bash
-git clone git@github.com:willyrahmaw/CRM-Property.git
+git clone https://github.com/willyrahmaw/CRM-Property.git
 cd CRM-Property
 ```
 
-### 2. Pasang Dependensi Backend & Frontend
+### 2. Pasang Dependensi PHP
 ```bash
 composer install
-npm install
 ```
 
-### 3. Konfigurasi Environment (`.env`)
-Salin file `.env.example` menjadi `.env`:
+### 3. Konfigurasi Lingkungan (.env)
 ```bash
 cp .env.example .env
 php artisan key:generate
 ```
-
-Sesuaikan kredensial database pada `.env`:
-```ini
+*Pastikan kredensial database diatur pada berkas `.env`:*
+```env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
@@ -176,7 +201,7 @@ npm run build
 ```bash
 php artisan serve
 ```
-Buka peramban Anda di: `http://127.0.0.1:8000`
+Buka peramban Anda di: `http://127.0.0.1:8000` (atau akses langsung live demo di **[https://property.willyrw.my.id](https://property.willyrw.my.id)**).
 
 ---
 
@@ -188,22 +213,26 @@ Semua akun demo bawaan menggunakan kata sandi standar: **`CrmProperty123!`**
 | :--- | :--- | :--- | :--- |
 | **Company Owner** | Bambang Wijaya | `owner@propflow.local` | `CrmProperty123!` |
 | **Sales Manager** | Hendrik Pratama | `manager@propflow.local` | `CrmProperty123!` |
-| **Finance** | Siti Rahmawati | `finance@propflow.local` | `CrmProperty123!` |
+| **Finance / Kasir** | Siti Rahmawati | `finance@propflow.local` | `CrmProperty123!` |
 | **Admin Property** | Dedi Irawan | `admin@propflow.local` | `CrmProperty123!` |
+| **Team Leader** | Fajar Nugraha | `fajar@propflow.local` | `CrmProperty123!` |
 | **Sales Agent 1** | Andi Setiawan | `andi@propflow.local` | `CrmProperty123!` |
 | **Sales Agent 2** | Rina Melati | `rina@propflow.local` | `CrmProperty123!` |
+| **Sales Agent 3** | Dimas Pratama | `dimas@propflow.local` | `CrmProperty123!` |
+| **Sales Agent 4** | Maya Anggraini | `maya@propflow.local` | `CrmProperty123!` |
 
 ---
 
 ## 🧪 Pengujian Otomatis (Automated Tests)
 
-Aplikasi dilengkapi dengan 85 pengujian otomatis (*Feature & Unit tests*) yang mencakup integritas bisnis kritis:
-- Pencegahan double-booking (*Concurrency Test* dengan transaksi database).
+Aplikasi dilengkapi dengan 94 pengujian otomatis (*Feature & Unit tests*) dengan 431 assertions yang mencakup integritas bisnis kritis:
+- Pencegahan double-booking (*Concurrency Test* dengan database locking `lockForUpdate`).
 - Otorisasi menu dan rute berbasis peran (*Role & Permission Gate*).
+- 1-Click WhatsApp formatting & salutation gender intelligence (`Bapak`/`Ibu`).
 - Multi-photo upload pada cluster properti dan penghapusan parsial.
 - Layanan kompresi gambar otomatis ke format WebP.
 - Responsivitas tata letak seluler dan off-canvas drawer navigasi.
-- Dukungan 3 zona waktu Indonesia (WIB, WITA, WIT) dengan middleware dan quick switcher.
+- Dukungan 3 zona waktu Indonesia (WIB, WITA, WIT) dengan middleware dan switcher.
 
 Untuk menjalankan seluruh test suite:
 ```bash
@@ -212,8 +241,8 @@ php artisan test
 
 Hasil:
 ```text
-Pass: 85 passed, 373 assertions
-Duration: ~5s
+Pass: 94 passed, 431 assertions
+Duration: ~4.3s
 ```
 
 ---
