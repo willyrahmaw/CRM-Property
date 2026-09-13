@@ -71,12 +71,14 @@ class DatabaseSeeder extends Seeder
         );
 
         // 2. Create Users across Roles
+        $defaultPassword = Hash::make('CrmProperty123!');
+
         $owner = User::create([
             'company_id' => $company->id,
             'name' => 'Bambang Wijaya',
             'email' => 'owner@propflow.local',
             'phone' => '081122334455',
-            'password' => Hash::make('password'),
+            'password' => $defaultPassword,
             'role' => UserRole::COMPANY_OWNER,
             'is_active' => true,
         ]);
@@ -86,7 +88,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Hendrik Pratama',
             'email' => 'manager@propflow.local',
             'phone' => '081233445566',
-            'password' => Hash::make('password'),
+            'password' => $defaultPassword,
             'role' => UserRole::SALES_MANAGER,
             'is_active' => true,
         ]);
@@ -96,7 +98,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Siti Rahmawati',
             'email' => 'finance@propflow.local',
             'phone' => '081344556677',
-            'password' => Hash::make('password'),
+            'password' => $defaultPassword,
             'role' => UserRole::FINANCE,
             'is_active' => true,
         ]);
@@ -106,7 +108,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Dedi Irawan',
             'email' => 'admin@propflow.local',
             'phone' => '081455667788',
-            'password' => Hash::make('password'),
+            'password' => $defaultPassword,
             'role' => UserRole::ADMIN_PROPERTY,
             'is_active' => true,
         ]);
@@ -116,7 +118,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Andi Setiawan',
             'email' => 'andi@propflow.local',
             'phone' => '081566778899',
-            'password' => Hash::make('password'),
+            'password' => $defaultPassword,
             'role' => UserRole::SALES_AGENT,
             'is_active' => true,
         ]);
@@ -126,7 +128,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Rina Melati',
             'email' => 'rina@propflow.local',
             'phone' => '081677889900',
-            'password' => Hash::make('password'),
+            'password' => $defaultPassword,
             'role' => UserRole::SALES_AGENT,
             'is_active' => true,
         ]);
@@ -136,7 +138,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Dimas Saputra',
             'email' => 'dimas@propflow.local',
             'phone' => '081788990011',
-            'password' => Hash::make('password'),
+            'password' => $defaultPassword,
             'role' => UserRole::SALES_AGENT,
             'is_active' => true,
         ]);
@@ -146,7 +148,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Maya Anggraini',
             'email' => 'maya@propflow.local',
             'phone' => '081899001122',
-            'password' => Hash::make('password'),
+            'password' => $defaultPassword,
             'role' => UserRole::SALES_AGENT,
             'is_active' => true,
         ]);
@@ -156,7 +158,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Fajar Nugroho',
             'email' => 'fajar@propflow.local',
             'phone' => '081900112233',
-            'password' => Hash::make('password'),
+            'password' => $defaultPassword,
             'role' => UserRole::TEAM_LEADER,
             'is_active' => true,
         ]);

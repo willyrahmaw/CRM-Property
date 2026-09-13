@@ -175,16 +175,16 @@ Buka peramban Anda di: `http://127.0.0.1:8000`
 
 ## 🔑 Akun Demo Bawaan (Default Seeded Credentials)
 
-Semua akun demo bawaan menggunakan kata sandi standar: **`password`**
+Semua akun demo bawaan menggunakan kata sandi standar: **`CrmProperty123!`**
 
 | Peran (Role) | Nama Pengguna | Alamat Email | Password |
 | :--- | :--- | :--- | :--- |
-| **Company Owner** | Bambang Wijaya | `owner@propflow.local` | `password` |
-| **Sales Manager** | Hendrik Pratama | `manager@propflow.local` | `password` |
-| **Finance** | Siti Rahmawati | `finance@propflow.local` | `password` |
-| **Admin Property** | Dedi Irawan | `admin@propflow.local` | `password` |
-| **Sales Agent 1** | Andi Setiawan | `andi@propflow.local` | `password` |
-| **Sales Agent 2** | Rina Melati | `rina@propflow.local` | `password` |
+| **Company Owner** | Bambang Wijaya | `owner@propflow.local` | `CrmProperty123!` |
+| **Sales Manager** | Hendrik Pratama | `manager@propflow.local` | `CrmProperty123!` |
+| **Finance** | Siti Rahmawati | `finance@propflow.local` | `CrmProperty123!` |
+| **Admin Property** | Dedi Irawan | `admin@propflow.local` | `CrmProperty123!` |
+| **Sales Agent 1** | Andi Setiawan | `andi@propflow.local` | `CrmProperty123!` |
+| **Sales Agent 2** | Rina Melati | `rina@propflow.local` | `CrmProperty123!` |
 
 ---
 

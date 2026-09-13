@@ -72,7 +72,7 @@
                                type="password"
                                autocomplete="current-password"
                                required
-                               value="password"
+                               value="CrmProperty123!"
                                class="block w-full pl-9 pr-3 py-2.5 text-sm bg-white border border-[#E8E4DA] rounded-lg text-[#161616] placeholder-[#79766F] focus:outline-none focus:ring-1 focus:ring-[#B89B5E] focus:border-[#B89B5E] transition-colors"
                                placeholder="••••••••">
                     </div>
@@ -115,7 +115,7 @@
                     <button type="button"
                             data-quick-login
                             data-email="owner@propflow.local"
-                            data-password="password"
+                            data-password="CrmProperty123!"
                             data-auto-submit="true"
                             class="flex items-center justify-between p-2.5 rounded-lg border border-[#E8E4DA] bg-[#F7F6F2] hover:bg-white hover:border-[#B89B5E] text-left transition-all group">
                         <div class="flex items-center space-x-2.5">
@@ -134,7 +134,7 @@
                     <button type="button"
                             data-quick-login
                             data-email="manager@propflow.local"
-                            data-password="password"
+                            data-password="CrmProperty123!"
                             data-auto-submit="true"
                             class="flex items-center justify-between p-2.5 rounded-lg border border-[#E8E4DA] bg-[#F7F6F2] hover:bg-white hover:border-[#B89B5E] text-left transition-all group">
                         <div class="flex items-center space-x-2.5">
@@ -153,7 +153,7 @@
                     <button type="button"
                             data-quick-login
                             data-email="finance@propflow.local"
-                            data-password="password"
+                            data-password="CrmProperty123!"
                             data-auto-submit="true"
                             class="flex items-center justify-between p-2.5 rounded-lg border border-[#E8E4DA] bg-[#F7F6F2] hover:bg-white hover:border-[#B89B5E] text-left transition-all group">
                         <div class="flex items-center space-x-2.5">
@@ -172,7 +172,7 @@
                     <button type="button"
                             data-quick-login
                             data-email="admin@propflow.local"
-                            data-password="password"
+                            data-password="CrmProperty123!"
                             data-auto-submit="true"
                             class="flex items-center justify-between p-2.5 rounded-lg border border-[#E8E4DA] bg-[#F7F6F2] hover:bg-white hover:border-[#B89B5E] text-left transition-all group">
                         <div class="flex items-center space-x-2.5">
@@ -191,7 +191,7 @@
                     <button type="button"
                             data-quick-login
                             data-email="andi@propflow.local"
-                            data-password="password"
+                            data-password="CrmProperty123!"
                             data-auto-submit="true"
                             class="flex items-center justify-between p-2.5 rounded-lg border border-[#E8E4DA] bg-[#F7F6F2] hover:bg-white hover:border-[#B89B5E] text-left transition-all group sm:col-span-2">
                         <div class="flex items-center space-x-2.5">
