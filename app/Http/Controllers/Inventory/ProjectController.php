@@ -43,7 +43,7 @@ class ProjectController extends Controller
         $validated['slug'] = Str::slug($validated['name']) . '-' . Str::lower(Str::random(4));
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('properties/projects', 'public');
+            $path = app(\App\Services\ImageOptimizerService::class)->convertToWebp($request->file('image'), 'properties/projects');
             $validated['image'] = $path;
         }
 
@@ -71,7 +71,7 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function update(UpdateProjectRequest $request, Project $project): RedirectResponse
+    public function update(UpdateProjectRequest $request, Project $project, \App\Services\ImageOptimizerService $imageOptimizer): RedirectResponse
     {
         $validated = $request->validated();
 
@@ -79,7 +79,7 @@ class ProjectController extends Controller
             if ($project->image && Storage::disk('public')->exists($project->image)) {
                 Storage::disk('public')->delete($project->image);
             }
-            $path = $request->file('image')->store('properties/projects', 'public');
+            $path = $imageOptimizer->convertToWebp($request->file('image'), 'properties/projects');
             $validated['image'] = $path;
         }
 

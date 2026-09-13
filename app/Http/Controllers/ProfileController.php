@@ -39,7 +39,7 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(UpdateProfileRequest $request): RedirectResponse
+    public function update(UpdateProfileRequest $request, \App\Services\ImageOptimizerService $imageOptimizer): RedirectResponse
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
@@ -50,7 +50,7 @@ class ProfileController extends Controller
                 Storage::disk('public')->delete($user->avatar_path);
             }
 
-            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+            $avatarPath = $imageOptimizer->convertToWebp($request->file('avatar'), 'avatars');
             $user->avatar_path = $avatarPath;
         }
 

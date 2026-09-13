@@ -252,6 +252,7 @@ class PropertyInventoryTest extends TestCase
 
         foreach ($cluster->photos as $path) {
             Storage::disk('public')->assertExists($path);
+            $this->assertStringEndsWith('.webp', $path);
         }
     }
 

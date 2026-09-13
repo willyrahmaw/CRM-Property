@@ -74,14 +74,14 @@ class ClusterController extends Controller
         ]);
     }
 
-    public function store(StoreClusterRequest $request): RedirectResponse
+    public function store(StoreClusterRequest $request, \App\Services\ImageOptimizerService $imageOptimizer): RedirectResponse
     {
         $validated = $request->validated();
         $photoPaths = [];
 
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photoFile) {
-                $path = $photoFile->store('properties/clusters', 'public');
+                $path = $imageOptimizer->convertToWebp($photoFile, 'properties/clusters');
                 $photoPaths[] = $path;
             }
         }
@@ -105,7 +105,7 @@ class ClusterController extends Controller
         ]);
     }
 
-    public function update(UpdateClusterRequest $request, Cluster $cluster): RedirectResponse
+    public function update(UpdateClusterRequest $request, Cluster $cluster, \App\Services\ImageOptimizerService $imageOptimizer): RedirectResponse
     {
         $validated = $request->validated();
         $currentPhotos = $cluster->photos ?? [];
@@ -120,10 +120,10 @@ class ClusterController extends Controller
             }
         }
 
-        // Tambahkan foto-foto baru yang diunggah
+        // Tambahkan foto-foto baru yang diunggah dengan kompresi WebP otomatis
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photoFile) {
-                $path = $photoFile->store('properties/clusters', 'public');
+                $path = $imageOptimizer->convertToWebp($photoFile, 'properties/clusters');
                 $currentPhotos[] = $path;
             }
         }

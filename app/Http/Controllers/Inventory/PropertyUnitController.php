@@ -57,14 +57,14 @@ class PropertyUnitController extends Controller
         ]);
     }
 
-    public function store(StorePropertyUnitRequest $request): RedirectResponse
+    public function store(StorePropertyUnitRequest $request, \App\Services\ImageOptimizerService $imageOptimizer): RedirectResponse
     {
         $validated = $request->validated();
         $validated['base_price'] = $validated['base_price'] ?? $validated['selling_price'];
         $validated['status'] = PropertyUnitStatus::AVAILABLE;
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('properties/units', 'public');
+            $path = $imageOptimizer->convertToWebp($request->file('image'), 'properties/units');
             $validated['image'] = $path;
         }
 
