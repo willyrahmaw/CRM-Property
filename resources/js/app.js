@@ -6,9 +6,11 @@ import { initSearchableSelects } from './modules/searchable-select.js';
 import { initBookingForm } from './modules/booking.js';
 import { initCommissionSettings } from './modules/commission-settings.js';
 import { initMobileMenu } from './modules/mobile-menu.js';
+import { initTimezoneDropdown } from './modules/timezone.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
+    initTimezoneDropdown();
     initTabs();
     initSearchableSelects();
     initBookingForm();

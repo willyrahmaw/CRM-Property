@@ -29,6 +29,7 @@ class Company extends Model
         'email',
         'phone',
         'address',
+        'timezone',
         'logo_path',
         'website_settings',
         'commission_settings',
@@ -87,5 +88,13 @@ class Company extends Model
     public function users(): HasMany
     {
         return $this->hasMany(User::class, 'company_id');
+    }
+
+    /**
+     * Get the active Indonesian timezone enum instance for this company.
+     */
+    public function getTimezoneEnum(): \App\Enums\IndonesianTimezone
+    {
+        return \App\Enums\IndonesianTimezone::fromOrDefault($this->timezone);
     }
 }

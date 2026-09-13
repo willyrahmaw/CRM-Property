@@ -95,7 +95,7 @@
                                             {{ $visit->visit_date->translatedFormat('d M Y') }}
                                         </span>
                                         <span class="text-[11px] text-[#79766F] block">
-                                            Pukul {{ $visit->visit_date->format('H:i') }} WIB
+                                            Pukul {{ $visit->visit_date->format('H:i') }} {{ auth()->user()?->getTimezoneCode() ?? 'WIB' }}
                                         </span>
                                     </div>
                                 </div>

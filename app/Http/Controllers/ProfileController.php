@@ -57,6 +57,7 @@ class ProfileController extends Controller
         $user->name = $validated['name'];
         $user->email = $validated['email'];
         $user->phone = $validated['phone'] ?? null;
+        $user->timezone = $validated['timezone'] ?? $user->timezone ?? 'Asia/Jakarta';
         $user->bank_name = $validated['bank_name'] ?? null;
         $user->bank_account_number = $validated['bank_account_number'] ?? null;
         $user->bank_account_holder = $validated['bank_account_holder'] ?? null;

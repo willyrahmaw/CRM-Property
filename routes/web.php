@@ -19,6 +19,7 @@ use App\Http\Controllers\Sales\NegotiationController;
 use App\Http\Controllers\Settings\CommissionSettingController;
 use App\Http\Controllers\Settings\UserController;
 use App\Http\Controllers\Settings\WebsiteSettingController;
+use App\Http\Controllers\TimezoneController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -53,6 +54,9 @@ Route::middleware('auth')->group(function () {
         Route::put('/password', [ProfileController::class, 'updatePassword'])->name('password.update');
         Route::delete('/avatar', [ProfileController::class, 'destroyAvatar'])->name('avatar.destroy');
     });
+
+    // Timezone Switcher
+    Route::post('/timezone/switch', [TimezoneController::class, 'switch'])->name('timezone.switch');
 
     // CRM
     Route::prefix('crm')->name('crm.')->group(function () {

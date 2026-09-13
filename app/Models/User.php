@@ -23,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'phone',
+        'timezone',
         'avatar_path',
         'bank_name',
         'bank_account_number',
@@ -188,5 +189,21 @@ class User extends Authenticatable
         }
 
         return $initials ?: 'U';
+    }
+
+    /**
+     * Get the active Indonesian timezone enum instance.
+     */
+    public function getTimezoneEnum(): \App\Enums\IndonesianTimezone
+    {
+        return \App\Enums\IndonesianTimezone::fromOrDefault($this->timezone);
+    }
+
+    /**
+     * Get the short Indonesian timezone abbreviation (WIB, WITA, or WIT).
+     */
+    public function getTimezoneCode(): string
+    {
+        return $this->getTimezoneEnum()->code();
     }
 }

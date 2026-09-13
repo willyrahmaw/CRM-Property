@@ -9,7 +9,7 @@
   <img src="https://img.shields.io/badge/PHP-8.3%2B-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP 8.3" />
   <img src="https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
   <img src="https://img.shields.io/badge/Vite-8.x-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
-  <img src="https://img.shields.io/badge/Tests-76%20Passed-15803D?style=for-the-badge&logo=githubactions&logoColor=white" alt="Tests Passed" />
+  <img src="https://img.shields.io/badge/Tests-85%20Passed-15803D?style=for-the-badge&logo=githubactions&logoColor=white" alt="Tests Passed" />
   <img src="https://img.shields.io/badge/License-Proprietary-B89B5E?style=for-the-badge" alt="License" />
 </p>
 
@@ -70,7 +70,14 @@ Dibangun dengan filosofi desain **Luxury Corporate Minimalist** berpalet solid e
 - **Touch Targets Optimal**: Tombol aksi dan navigasi memiliki area sentuh minimal 44px ramah ibu jari.
 - **Tabel Data Aman di Ponsel**: Tabel data tidak terjepit dan dapat digeser menyamping (*touch horizontal scroll*) dengan batas lebar minimum yang aman.
 
-### 9. 🛡️ Keamanan Enterprise & Isolasi Multi-Tenant
+### 9. 🕒 Dukungan 3 Zona Waktu Indonesia Penuh (WIB, WITA, WIT)
+- **WIB (UTC+7 / `Asia/Jakarta`)**: Sumatera, Jawa, Madura, Kalimantan Barat, Kalimantan Tengah.
+- **WITA (UTC+8 / `Asia/Makassar`)**: Bali, Nusa Tenggara, Kalimantan Selatan, Kalimantan Timur, Kalimantan Utara, Sulawesi.
+- **WIT (UTC+9 / `Asia/Jayapura`)**: Maluku, Maluku Utara, Papua.
+- **Quick Switcher Topbar**: Pengalihan zona waktu secara instan dengan dropdown interaktif 1-klik di header navigasi utama.
+- **Sinkronisasi Waktu Otomatis**: Middleware `SetUserTimezone` secara cerdas menyesuaikan waktu pencatatan jadwal survei lokasi, riwayat aktivitas prospek, dan audit log sesuai zona waktu pengguna aktif.
+
+### 10. 🛡️ Keamanan Enterprise & Isolasi Multi-Tenant
 - **Multi-Tenant Ready**: Setiap data terikat ke `company_id` yang divalidasi server-side (mencegah IDOR/BOLA).
 - **Private Storage**: Dokumen sensitif konsumen (KTP, NPWP, KK, Slip Gaji) disimpan di *Private Storage*, hanya dapat diunduh oleh pengguna berwenang.
 - **Role-Based Access Control (RBAC)**: Pembatasan akses berbasis peran di tingkat Middleware dan Policy.
@@ -190,12 +197,13 @@ Semua akun demo bawaan menggunakan kata sandi standar: **`CrmProperty123!`**
 
 ## 🧪 Pengujian Otomatis (Automated Tests)
 
-Aplikasi dilengkapi dengan 76 pengujian otomatis (*Feature & Unit tests*) yang mencakup integritas bisnis kritis:
+Aplikasi dilengkapi dengan 85 pengujian otomatis (*Feature & Unit tests*) yang mencakup integritas bisnis kritis:
 - Pencegahan double-booking (*Concurrency Test* dengan transaksi database).
 - Otorisasi menu dan rute berbasis peran (*Role & Permission Gate*).
 - Multi-photo upload pada cluster properti dan penghapusan parsial.
 - Layanan kompresi gambar otomatis ke format WebP.
 - Responsivitas tata letak seluler dan off-canvas drawer navigasi.
+- Dukungan 3 zona waktu Indonesia (WIB, WITA, WIT) dengan middleware dan quick switcher.
 
 Untuk menjalankan seluruh test suite:
 ```bash
@@ -204,7 +212,7 @@ php artisan test
 
 Hasil:
 ```text
-Pass: 76 passed, 342 assertions
+Pass: 85 passed, 373 assertions
 Duration: ~5s
 ```
 

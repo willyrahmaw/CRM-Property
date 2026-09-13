@@ -265,6 +265,33 @@
                             </div>
                             <p class="text-[10px] text-[#79766F] mt-1">Konteks multi-tenant terikat pada perusahaan terdaftar.</p>
                         </div>
+
+                        <!-- Timezone / 3 Zona Waktu Indonesia -->
+                        <div class="md:col-span-2">
+                            <label for="timezone" class="block text-xs font-semibold text-[#161616] mb-1.5">
+                                Zona Waktu Operasional (3 Waktu Indonesia) <span class="text-red-600">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#79766F]">
+                                    <i class="fa-solid fa-clock text-xs"></i>
+                                </div>
+                                <select
+                                    name="timezone"
+                                    id="timezone"
+                                    required
+                                    class="w-full pl-9 pr-8 py-2 bg-white border border-[#E8E4DA] rounded-lg text-xs text-[#161616] focus:outline-none focus:border-[#B89B5E] focus:ring-1 focus:ring-[#B89B5E]">
+                                    @foreach(\App\Enums\IndonesianTimezone::cases() as $tz)
+                                        <option value="{{ $tz->value }}" {{ old('timezone', $user->timezone ?? 'Asia/Jakarta') === $tz->value ? 'selected' : '' }}>
+                                            {{ $tz->label() }} — ({{ $tz->regions() }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <p class="text-[10px] text-[#79766F] mt-1">Pilih standar waktu operasional Anda: WIB (UTC+7), WITA (UTC+8), atau WIT (UTC+9). Seluruh riwayat aktivitas, jadwal survei lokasi, dan transaksi akan disesuaikan otomatis.</p>
+                            @error('timezone')
+                                <p class="text-xs text-[#991B1B] mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
 
                     <!-- Bank Account Details for Commissions -->
