@@ -1,0 +1,214 @@
+@import 'tailwindcss';
+
+@source '../../app/**/*.php';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../views/**/*.blade.php';
+@source '../js/**/*.js';
+
+@theme {
+    --color-prop-bg: #F7F6F2;
+    --color-prop-surface: #FFFFFF;
+    --color-prop-dark: #161616;
+    --color-prop-dark-secondary: #262626;
+    --color-prop-gold: #B89B5E;
+    --color-prop-gold-soft: #D7C49E;
+    --color-prop-border: #E8E4DA;
+    --color-prop-muted: #79766F;
+    --color-prop-success: #15803D;
+    --color-prop-warning: #D97706;
+    --color-prop-danger: #DC2626;
+
+    --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    background-color: var(--color-prop-bg);
+    color: var(--color-prop-dark);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   Luxury Minimalist Scrollbar Design System (No Gradients)
+   ========================================================================== */
+
+/* Modern Standard (Firefox) */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #D1CDC4 transparent;
+}
+
+aside,
+aside *,
+aside nav {
+    scrollbar-width: thin;
+    scrollbar-color: #2F2F2F #161616;
+}
+
+/* WebKit (Chrome, Edge, Safari, Opera) */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #D1CDC4;
+    border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #B89B5E;
+}
+
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* Sidebar Dark Scrollbar */
+aside nav::-webkit-scrollbar,
+aside ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+aside nav::-webkit-scrollbar-track,
+aside ::-webkit-scrollbar-track {
+    background: #161616;
+}
+
+aside nav::-webkit-scrollbar-thumb,
+aside ::-webkit-scrollbar-thumb {
+    background-color: #2F2F2F;
+    border-radius: 9999px;
+}
+
+aside nav::-webkit-scrollbar-thumb:hover,
+aside ::-webkit-scrollbar-thumb:hover {
+    background-color: #B89B5E;
+}
+
+/* Table Horizontal Scrollbar */
+.prop-table-wrapper::-webkit-scrollbar {
+    height: 6px;
+}
+
+.prop-table-wrapper::-webkit-scrollbar-track {
+    background: #F7F6F2;
+    border-radius: 9999px;
+}
+
+.prop-table-wrapper::-webkit-scrollbar-thumb {
+    background-color: #D1CDC4;
+    border-radius: 9999px;
+}
+
+.prop-table-wrapper::-webkit-scrollbar-thumb:hover {
+    background-color: #B89B5E;
+}
+
+/* ==========================================================================
+   Luxury Enterprise Table Design System
+   ========================================================================== */
+
+.prop-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    background-color: #FFFFFF;
+    -webkit-overflow-scrolling: touch;
+}
+
+.prop-table {
+    width: 100%;
+    min-width: 100%;
+    text-align: left;
+    font-size: 0.8125rem; /* 13px */
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+.prop-table thead {
+    background-color: #F7F6F2;
+    border-bottom: 1px solid #E8E4DA;
+}
+
+.prop-table th {
+    padding: 0.875rem 1.25rem;
+    font-size: 0.6875rem; /* 11px */
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #79766F;
+    white-space: nowrap;
+    border-bottom: 1px solid #E8E4DA;
+}
+
+.prop-table td {
+    padding: 0.875rem 1.25rem;
+    vertical-align: middle;
+    color: #161616;
+    border-bottom: 1px solid #E8E4DA;
+    line-height: 1.4;
+    text-wrap: pretty;
+}
+
+.prop-table tbody tr {
+    background-color: #FFFFFF;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.prop-table tbody tr:hover {
+    background-color: #FAF9F5;
+}
+
+.prop-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Cell shrink-to-fit text (Follow text width) */
+.prop-table th.cell-fit,
+.prop-table td.cell-fit,
+.prop-table .cell-fit,
+.prop-table .cell-nowrap {
+    white-space: nowrap;
+    width: 1%;
+}
+
+/* Action column always hugs content on the right */
+.prop-table .action-col {
+    text-align: right;
+    white-space: nowrap;
+    width: 1%;
+}
+
+/* Flexible text column with proper text-wrapping */
+.prop-table .cell-wrap {
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: break-word;
+    text-wrap: pretty;
+    min-width: 160px;
+}
+
+/* Badges / Pills: Strict shrink-to-fit text */
+.prop-table span[class*="rounded-full"],
+.prop-table span[class*="rounded-md"],
+.prop-table span[class*="rounded-lg"],
+.prop-table span[class*="rounded"] {
+    display: inline-flex;
+    align-items: center;
+    width: max-content;
+    max-width: 100%;
+    white-space: nowrap;
+}
+
+/* Pagination container polish */
+.prop-table-pagination {
+    padding: 0.875rem 1.25rem;
+    background-color: #FFFFFF;
+    border-top: 1px solid #E8E4DA;
+}
