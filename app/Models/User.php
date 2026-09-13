@@ -193,9 +193,14 @@ class User extends Authenticatable
 
     /**
      * Get the active Indonesian timezone enum instance.
+     * When user belongs to a company (PT), the PT's timezone is authoritative for all staff.
      */
     public function getTimezoneEnum(): \App\Enums\IndonesianTimezone
     {
+        if ($this->company && $this->company->timezone) {
+            return \App\Enums\IndonesianTimezone::fromOrDefault($this->company->timezone);
+        }
+
         return \App\Enums\IndonesianTimezone::fromOrDefault($this->timezone);
     }
 

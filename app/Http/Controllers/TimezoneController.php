@@ -24,6 +24,13 @@ class TimezoneController extends Controller
         $selectedTz = IndonesianTimezone::from($validated['timezone']);
 
         if ($request->user()) {
+            if ($request->user()->company) {
+                // Update PT timezone so all employees/staff in this PT use this timezone
+                $request->user()->company->update([
+                    'timezone' => $selectedTz->value,
+                ]);
+            }
+
             $request->user()->update([
                 'timezone' => $selectedTz->value,
             ]);

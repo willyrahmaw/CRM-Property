@@ -268,26 +268,39 @@
 
                         <!-- Timezone / 3 Zona Waktu Indonesia -->
                         <div class="md:col-span-2">
-                            <label for="timezone" class="block text-xs font-semibold text-[#161616] mb-1.5">
-                                Zona Waktu Operasional (3 Waktu Indonesia) <span class="text-red-600">*</span>
+                            <label class="block text-xs font-semibold text-[#161616] mb-1.5">
+                                Zona Waktu Operasional PT (3 Waktu Indonesia)
                             </label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#79766F]">
-                                    <i class="fa-solid fa-clock text-xs"></i>
+                            @if($user->isCompanyOwner() || $user->isSuperAdmin())
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#79766F]">
+                                        <i class="fa-solid fa-clock text-xs"></i>
+                                    </div>
+                                    <select
+                                        name="timezone"
+                                        id="timezone"
+                                        class="w-full pl-9 pr-8 py-2 bg-white border border-[#E8E4DA] rounded-lg text-xs text-[#161616] focus:outline-none focus:border-[#B89B5E] focus:ring-1 focus:ring-[#B89B5E]">
+                                        @foreach(\App\Enums\IndonesianTimezone::cases() as $tz)
+                                            <option value="{{ $tz->value }}" {{ old('timezone', $user->company?->timezone ?? $user->timezone ?? 'Asia/Jakarta') === $tz->value ? 'selected' : '' }}>
+                                                {{ $tz->label() }} — ({{ $tz->regions() }})
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <select
-                                    name="timezone"
-                                    id="timezone"
-                                    required
-                                    class="w-full pl-9 pr-8 py-2 bg-white border border-[#E8E4DA] rounded-lg text-xs text-[#161616] focus:outline-none focus:border-[#B89B5E] focus:ring-1 focus:ring-[#B89B5E]">
-                                    @foreach(\App\Enums\IndonesianTimezone::cases() as $tz)
-                                        <option value="{{ $tz->value }}" {{ old('timezone', $user->timezone ?? 'Asia/Jakarta') === $tz->value ? 'selected' : '' }}>
-                                            {{ $tz->label() }} — ({{ $tz->regions() }})
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <p class="text-[10px] text-[#79766F] mt-1">Pilih standar waktu operasional Anda: WIB (UTC+7), WITA (UTC+8), atau WIT (UTC+9). Seluruh riwayat aktivitas, jadwal survei lokasi, dan transaksi akan disesuaikan otomatis.</p>
+                                <p class="text-[10px] text-[#79766F] mt-1">Sebagai Pengelola / Owner, ketika zona waktu PT ini disetel (misal: WIB), seluruh akun tim penjualan, finance, jadwal survei lokasi, dan log transaksi otomatis mengikuti zona waktu PT ini.</p>
+                            @else
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#79766F]">
+                                        <i class="fa-solid fa-clock text-xs"></i>
+                                    </div>
+                                    <input
+                                        type="text"
+                                        value="{{ $user->getTimezoneEnum()->label() }} ({{ $user->company->name ?? 'PT Pengembang' }})"
+                                        disabled
+                                        class="w-full pl-9 pr-3 py-2 bg-[#F7F6F2] border border-[#E8E4DA] rounded-lg text-xs text-[#79766F] cursor-not-allowed">
+                                </div>
+                                <p class="text-[10px] text-[#79766F] mt-1">Mengikuti zona waktu operasional PT ({{ $user->getTimezoneCode() }}). Seluruh tim, jadwal survei kaveling, dan transaksi tersinkronisasi di zona waktu ini.</p>
+                            @endif
                             @error('timezone')
                                 <p class="text-xs text-[#991B1B] mt-1">{{ $message }}</p>
                             @enderror

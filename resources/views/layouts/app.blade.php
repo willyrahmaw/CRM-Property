@@ -99,48 +99,58 @@
             </div>
 
             <div class="flex items-center space-x-2 sm:space-x-3">
-                <!-- Timezone Quick Switcher -->
+                <!-- Timezone Quick Switcher / PT Indicator -->
                 @php
                     $activeTz = auth()->user()?->getTimezoneEnum() ?? \App\Enums\IndonesianTimezone::WIB;
+                    $canChangeTz = auth()->user()?->isCompanyOwner() || auth()->user()?->isSuperAdmin();
                 @endphp
                 <div class="relative" data-timezone-dropdown>
-                    <button type="button"
-                            data-timezone-toggle
-                            class="flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg border border-[#E8E4DA] bg-[#F7F6F2] hover:bg-white hover:border-[#B89B5E] text-xs font-semibold text-[#161616] transition-colors shadow-2xs"
-                            title="Ganti Zona Waktu (WIB / WITA / WIT)">
-                        <i class="fa-regular fa-clock text-[#B89B5E] text-xs"></i>
-                        <span class="font-bold text-[11px]">{{ $activeTz->code() }}</span>
-                        <span class="text-[10px] text-[#79766F] font-normal hidden lg:inline">({{ $activeTz->utcOffset() }})</span>
-                        <i class="fa-solid fa-chevron-down text-[9px] text-[#79766F]"></i>
-                    </button>
+                    @if($canChangeTz)
+                        <button type="button"
+                                data-timezone-toggle
+                                class="flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg border border-[#E8E4DA] bg-[#F7F6F2] hover:bg-white hover:border-[#B89B5E] text-xs font-semibold text-[#161616] transition-colors shadow-2xs"
+                                title="Ganti Zona Waktu PT (Berlaku untuk seluruh akun & transaksi PT)">
+                            <i class="fa-regular fa-clock text-[#B89B5E] text-xs"></i>
+                            <span class="font-bold text-[11px]">{{ $activeTz->code() }}</span>
+                            <span class="text-[10px] text-[#79766F] font-normal hidden lg:inline">({{ $activeTz->utcOffset() }})</span>
+                            <i class="fa-solid fa-chevron-down text-[9px] text-[#79766F]"></i>
+                        </button>
 
-                    <!-- Dropdown Menu -->
-                    <div data-timezone-menu
-                         class="hidden absolute right-0 mt-2 w-72 bg-white border border-[#E8E4DA] rounded-xl shadow-lg py-1.5 z-50">
-                        <div class="px-3 py-1.5 border-b border-[#E8E4DA] mb-1">
-                            <p class="text-[10px] font-bold text-[#79766F] uppercase tracking-wider">3 Zona Waktu Indonesia</p>
-                            <p class="text-[10px] text-[#79766F]">Pilih zona waktu operasional sistem</p>
-                        </div>
-                        @foreach(\App\Enums\IndonesianTimezone::cases() as $tzOption)
-                            <form action="{{ route('timezone.switch') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="timezone" value="{{ $tzOption->value }}">
-                                <button type="submit"
-                                        class="w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-[#F7F6F2] transition-colors {{ $activeTz === $tzOption ? 'bg-[#F7F6F2] text-[#B89B5E] font-bold' : 'text-[#161616]' }}">
-                                    <div class="min-w-0 pr-2">
-                                        <div class="font-semibold flex items-center gap-1.5">
-                                            <span>{{ $tzOption->code() }}</span>
-                                            <span class="text-[10px] text-[#79766F] font-normal">({{ $tzOption->utcOffset() }})</span>
+                        <!-- Dropdown Menu for Company Owner -->
+                        <div data-timezone-menu
+                             class="hidden absolute right-0 mt-2 w-72 bg-white border border-[#E8E4DA] rounded-xl shadow-lg py-1.5 z-50">
+                            <div class="px-3 py-1.5 border-b border-[#E8E4DA] mb-1">
+                                <p class="text-[10px] font-bold text-[#161616] uppercase tracking-wider">Zona Waktu PT Pengembang</p>
+                                <p class="text-[10px] text-[#79766F]">Perubahan berlaku untuk seluruh akun PT ini</p>
+                            </div>
+                            @foreach(\App\Enums\IndonesianTimezone::cases() as $tzOption)
+                                <form action="{{ route('timezone.switch') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="timezone" value="{{ $tzOption->value }}">
+                                    <button type="submit"
+                                            class="w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-[#F7F6F2] transition-colors {{ $activeTz === $tzOption ? 'bg-[#F7F6F2] text-[#B89B5E] font-bold' : 'text-[#161616]' }}">
+                                        <div class="min-w-0 pr-2">
+                                            <div class="font-semibold flex items-center gap-1.5">
+                                                <span>{{ $tzOption->code() }}</span>
+                                                <span class="text-[10px] text-[#79766F] font-normal">({{ $tzOption->utcOffset() }})</span>
+                                            </div>
+                                            <div class="text-[10px] text-[#79766F] font-normal truncate">{{ $tzOption->regions() }}</div>
                                         </div>
-                                        <div class="text-[10px] text-[#79766F] font-normal truncate">{{ $tzOption->regions() }}</div>
-                                    </div>
-                                    @if($activeTz === $tzOption)
-                                        <i class="fa-solid fa-check text-xs text-[#B89B5E] flex-shrink-0"></i>
-                                    @endif
-                                </button>
-                            </form>
-                        @endforeach
-                    </div>
+                                        @if($activeTz === $tzOption)
+                                            <i class="fa-solid fa-check text-xs text-[#B89B5E] flex-shrink-0"></i>
+                                        @endif
+                                    </button>
+                                </form>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg border border-[#E8E4DA] bg-[#F7F6F2] text-xs font-semibold text-[#161616] shadow-2xs"
+                             title="Zona Waktu Operasional PT: {{ $activeTz->label() }} (Seluruh akun PT terikat di zona waktu ini)">
+                            <i class="fa-regular fa-clock text-[#B89B5E] text-xs"></i>
+                            <span class="font-bold text-[11px]">{{ $activeTz->code() }}</span>
+                            <span class="text-[10px] text-[#79766F] font-normal hidden lg:inline">({{ $activeTz->utcOffset() }})</span>
+                        </div>
+                    @endif
                 </div>
 
                 <button type="button" class="w-9 h-9 rounded-lg border border-[#E8E4DA] flex items-center justify-center text-[#79766F] hover:text-[#161616] hover:bg-[#F7F6F2] transition-colors" title="Notifikasi">

@@ -97,4 +97,12 @@ class Company extends Model
     {
         return \App\Enums\IndonesianTimezone::fromOrDefault($this->timezone);
     }
+
+    /**
+     * Get the short Indonesian timezone abbreviation for this company.
+     */
+    public function getTimezoneCode(): string
+    {
+        return $this->getTimezoneEnum()->code();
+    }
 }

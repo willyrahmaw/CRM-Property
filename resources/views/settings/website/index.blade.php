@@ -184,7 +184,19 @@
                                 </label>
                                 <input type="url" name="google_maps_url" value="{{ old('google_maps_url', $settings['google_maps_url'] ?? '') }}"
                                        placeholder="https://maps.app.goo.gl/..."
-                                       class="w-full px-3 py-2 text-sm rounded-lg border border-[#E8E4DA] bg-white text-[#161616] focus:outline-none focus:border-[#B89B5E]">
+                                       class="w-full px-3 py-2 text-sm rounded-lg border border-[#E8E4DA] bg-white text-[#161616] focus:outline-none focus:border-[#B89B5E] mb-2">
+
+                                <label class="block text-xs font-semibold text-[#161616] uppercase mb-1">
+                                    Zona Waktu Operasional PT (3 Waktu Indonesia)
+                                </label>
+                                <select name="timezone" class="w-full px-3 py-2 text-sm rounded-lg border border-[#E8E4DA] bg-white text-[#161616] focus:outline-none focus:border-[#B89B5E]">
+                                    @foreach(\App\Enums\IndonesianTimezone::cases() as $tz)
+                                        <option value="{{ $tz->value }}" {{ old('timezone', $company->timezone ?? 'Asia/Jakarta') === $tz->value ? 'selected' : '' }}>
+                                            {{ $tz->label() }} — ({{ $tz->regions() }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <p class="text-[10px] text-[#79766F] mt-1">Ketika zona waktu PT ini disetel, seluruh tim penjualan, finance, dan jadwal survei lokasi PT ini otomatis mengikuti zona waktu ini.</p>
                             </div>
                         </div>
                     </div>

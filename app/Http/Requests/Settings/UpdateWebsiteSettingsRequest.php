@@ -22,6 +22,7 @@ class UpdateWebsiteSettingsRequest extends FormRequest
             'phone' => ['nullable', 'string', 'max:50'],
             'whatsapp' => ['nullable', 'string', 'max:50'],
             'address' => ['nullable', 'string', 'max:500'],
+            'timezone' => ['nullable', 'string', \Illuminate\Validation\Rule::enum(\App\Enums\IndonesianTimezone::class)],
             'operational_hours' => ['nullable', 'string', 'max:100'],
             'google_maps_url' => ['nullable', 'string', 'max:1000'],
             'announcement_active' => ['nullable', 'boolean'],

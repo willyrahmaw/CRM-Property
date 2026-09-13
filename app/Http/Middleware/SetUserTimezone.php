@@ -18,12 +18,13 @@ class SetUserTimezone
     {
         $timezone = null;
 
-        if ($request->user() && $request->user()->timezone) {
+        // When PT (Company) timezone is configured, all users in the PT follow it
+        if ($request->user() && $request->user()->company && $request->user()->company->timezone) {
+            $timezone = $request->user()->company->timezone;
+        } elseif ($request->user() && $request->user()->timezone) {
             $timezone = $request->user()->timezone;
         } elseif ($request->hasSession() && $request->session()->has('timezone')) {
             $timezone = $request->session()->get('timezone');
-        } elseif ($request->user() && $request->user()->company && $request->user()->company->timezone) {
-            $timezone = $request->user()->company->timezone;
         }
 
         $validTimezones = IndonesianTimezone::values();

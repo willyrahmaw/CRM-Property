@@ -93,6 +93,9 @@ class WebsiteSettingController extends Controller
         $company->email = $validated['email'] ?? $company->email;
         $company->phone = $validated['phone'] ?? $company->phone;
         $company->address = $validated['address'] ?? $company->address;
+        if (!empty($validated['timezone'])) {
+            $company->timezone = $validated['timezone'];
+        }
         $company->website_settings = array_merge($existingSettings, $validated);
         $company->save();
 
