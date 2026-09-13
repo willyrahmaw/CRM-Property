@@ -88,8 +88,18 @@
                         <span class="text-sm font-bold text-[#161616]">{{ $booking->customer->name }}</span>
                     </div>
                     <div>
-                        <span class="text-[#79766F] block text-[10px] uppercase font-bold">WhatsApp / Telepon</span>
-                        <span class="font-semibold text-[#15803D]">{{ $booking->customer->phone }}</span>
+                        <span class="text-[#79766F] block text-[10px] uppercase font-bold mb-1">WhatsApp / Telepon</span>
+                        <div class="flex items-center gap-2">
+                            <span class="font-semibold text-[#161616]">{{ $booking->customer->phone }}</span>
+                            @if ($booking->customer->phone)
+                                <a href="{{ $booking->customer->getWhatsAppUrl("Halo Bapak/Ibu {$booking->customer->name}, menginformasikan mengenai perkembangan pemesanan unit {$booking->propertyUnit->unit_number} di {$booking->propertyUnit->cluster->project->name}...") }}"
+                                   target="_blank"
+                                   class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#DCFCE7] hover:bg-[#BBF7D0] text-[#15803D] text-[11px] font-bold transition-colors">
+                                    <i class="fa-brands fa-whatsapp text-sm"></i>
+                                    <span>Chat WA</span>
+                                </a>
+                            @endif
+                        </div>
                     </div>
                     @if ($booking->customer->nik)
                         <div>

@@ -44,9 +44,19 @@
                             </a>
 
                             <div class="text-[11px] text-[#79766F] mb-3">
-                                <div><i class="fa-brands fa-whatsapp text-[#15803D] mr-1"></i> {{ $lead->phone }}</div>
+                                @if ($lead->phone)
+                                    <div>
+                                        <a href="{{ $lead->getWhatsAppUrl() }}"
+                                           target="_blank"
+                                           class="inline-flex items-center gap-1 font-semibold text-[#15803D] hover:text-[#166534] bg-[#DCFCE7] hover:bg-[#BBF7D0] border border-[#BBF7D0] px-2 py-0.5 rounded text-[10px] transition-colors"
+                                           title="Chat WhatsApp langsung">
+                                            <i class="fa-brands fa-whatsapp text-xs"></i>
+                                            <span>{{ $lead->phone }}</span>
+                                        </a>
+                                    </div>
+                                @endif
                                 @if ($lead->interestedProject)
-                                    <div class="mt-0.5"><i class="fa-solid fa-building text-[#B89B5E] mr-1"></i> {{ $lead->interestedProject->name }}</div>
+                                    <div class="mt-1"><i class="fa-solid fa-building text-[#B89B5E] mr-1"></i> {{ $lead->interestedProject->name }}</div>
                                 @endif
                             </div>
 

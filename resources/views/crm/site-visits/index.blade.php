@@ -105,7 +105,19 @@
                                     <a href="{{ route('crm.leads.show', $visit->lead) }}" class="font-bold text-[#161616] hover:text-[#B89B5E] block transition-colors">
                                         {{ $visit->lead->name }}
                                     </a>
-                                    <span class="text-[11px] text-[#79766F] block">{{ $visit->lead->phone ?? '-' }}</span>
+                                    @if($visit->lead->phone)
+                                        <div class="mt-0.5">
+                                            <a href="{{ $visit->lead->getWhatsAppUrl("Halo Bapak/Ibu {$visit->lead->name}, saya {$visit->sales->name} dari {$visit->project->name}. Mengonfirmasi jadwal survei lokasi unit properti pada " . $visit->visit_date->translatedFormat('l, d F Y') . " pukul " . $visit->visit_date->format('H:i') . " WIB. Apakah jadwalnya masih sesuai?") }}"
+                                               target="_blank"
+                                               title="Chat WhatsApp Konfirmasi Jadwal Survei"
+                                               class="inline-flex items-center gap-1 text-[11px] text-[#15803D] hover:text-[#166534] font-medium transition-colors">
+                                                <i class="fa-brands fa-whatsapp text-xs"></i>
+                                                <span>{{ $visit->lead->phone }}</span>
+                                            </a>
+                                        </div>
+                                    @else
+                                        <span class="text-[11px] text-[#79766F] block">-</span>
+                                    @endif
                                 @else
                                     <span class="font-bold text-[#161616] block">Konsumen</span>
                                 @endif

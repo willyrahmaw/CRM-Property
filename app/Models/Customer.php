@@ -40,4 +40,23 @@ class Customer extends Model
     {
         return $this->hasMany(CustomerDocument::class, 'customer_id');
     }
+
+    /**
+     * Get direct WhatsApp URL with sanitized international number.
+     */
+    public function getWhatsAppUrl(?string $message = null): ?string
+    {
+        return \App\Support\WhatsAppHelper::buildUrl(
+            $this->phone,
+            $message ?? "Halo Bapak/Ibu {$this->name}, salam hangat dari pengembang properti."
+        );
+    }
+
+    /**
+     * Get pre-crafted WhatsApp message templates for this customer.
+     */
+    public function getWhatsAppTemplates(?User $sales = null): array
+    {
+        return \App\Support\WhatsAppHelper::getCustomerTemplates($this, $sales);
+    }
 }

@@ -100,9 +100,19 @@
                                 </a>
                             </td>
                             <td>
-                                <div><i class="fa-brands fa-whatsapp text-[#15803D] mr-1"></i> {{ $lead->phone }}</div>
+                                @if ($lead->phone)
+                                    <a href="{{ $lead->getWhatsAppUrl() }}"
+                                       target="_blank"
+                                       class="inline-flex items-center gap-1.5 font-semibold text-[#15803D] hover:text-[#166534] bg-[#DCFCE7] hover:bg-[#BBF7D0] border border-[#BBF7D0] px-2 py-0.5 rounded text-xs transition-colors shadow-2xs group"
+                                       title="1-Click WhatsApp: Langsung kirim pesan tanpa simpan nomor">
+                                        <i class="fa-brands fa-whatsapp text-sm group-hover:scale-110 transition-transform"></i>
+                                        <span>{{ $lead->phone }}</span>
+                                    </a>
+                                @else
+                                    <span class="text-[#79766F] text-xs">-</span>
+                                @endif
                                 @if ($lead->email)
-                                    <div class="text-[#79766F] text-[11px]">{{ $lead->email }}</div>
+                                    <div class="text-[#79766F] text-[11px] mt-0.5">{{ $lead->email }}</div>
                                 @endif
                             </td>
                             <td>

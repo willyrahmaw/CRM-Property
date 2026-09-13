@@ -65,7 +65,7 @@
 
                     <!-- Quick Contact Strip -->
                     <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-[#79766F]">
-                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $lead->phone) }}?text=Halo%20{{ urlencode($lead->name) }}%2C%20terima%20kasih%20telah%20menghubungi%20kami."
+                        <a href="{{ $lead->getWhatsAppUrl() }}"
                            target="_blank"
                            class="inline-flex items-center font-semibold text-[#15803D] hover:text-[#166534] transition-colors bg-[#DCFCE7] border border-[#BBF7D0] px-2.5 py-1 rounded-lg">
                             <i class="fa-brands fa-whatsapp mr-1.5 text-sm"></i>
@@ -126,6 +126,52 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <!-- Left Column: Profile & Specifications (4 Columns) -->
         <div class="lg:col-span-4 space-y-6">
+            <!-- 1-Click WhatsApp Direct Connect Hub (Jemput Bola) -->
+            <div class="bg-white rounded-xl border border-[#BBF7D0] p-5 shadow-xs bg-[#F0FDF4]/30">
+                <div class="flex items-center space-x-2.5 mb-3">
+                    <div class="w-8 h-8 rounded-lg bg-[#15803D] text-white flex items-center justify-center text-sm shadow-xs flex-shrink-0">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xs font-bold text-[#161616] uppercase tracking-wider">1-Click WhatsApp Connect</h3>
+                        <p class="text-[10px] text-[#15803D] font-semibold">Jemput Bola Cepat Tanpa Simpan Nomor</p>
+                    </div>
+                </div>
+
+                <!-- Main Direct WhatsApp Button -->
+                <a href="{{ $lead->getWhatsAppUrl() }}"
+                   target="_blank"
+                   class="w-full flex items-center justify-center space-x-2 py-2.5 px-4 rounded-lg bg-[#15803D] hover:bg-[#166534] text-white font-semibold text-xs transition-colors shadow-xs mb-3.5 group">
+                    <i class="fa-brands fa-whatsapp text-base group-hover:scale-110 transition-transform"></i>
+                    <span>Chat WhatsApp ke {{ $lead->phone }}</span>
+                </a>
+
+                <!-- Quick Property Sales Chat Templates -->
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-[#79766F]">Pilih Template Properti Siap Kirim</span>
+                        <span class="text-[10px] text-[#15803D] font-semibold">1-Klik Terisi</span>
+                    </div>
+
+                    @foreach($lead->getWhatsAppTemplates() as $template)
+                        <a href="{{ $template['url'] }}"
+                           target="_blank"
+                           class="flex items-start space-x-2.5 p-2.5 rounded-lg border border-[#E8E4DA] bg-white hover:border-[#15803D] hover:bg-[#F0FDF4] transition-all group text-left block">
+                            <div class="w-6 h-6 rounded bg-[#F7F6F2] group-hover:bg-[#DCFCE7] text-[#79766F] group-hover:text-[#15803D] flex items-center justify-center text-xs shrink-0 mt-0.5 transition-colors">
+                                <i class="{{ $template['icon'] }}"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="text-xs font-bold text-[#161616] group-hover:text-[#15803D] transition-colors flex items-center justify-between">
+                                    <span>{{ $template['title'] }}</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-[#79766F] group-hover:text-[#15803D]"></i>
+                                </div>
+                                <p class="text-[10px] text-[#79766F] leading-tight line-clamp-1 mt-0.5">{{ $template['description'] }}</p>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+
             <!-- Property Preference Card -->
             <x-card title="Preferensi & Alokasi Properti" subtitle="Kriteria properti idaman yang dicari konsumen">
                 <div class="space-y-3.5 text-xs">

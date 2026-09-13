@@ -92,4 +92,23 @@ class Lead extends Model
     {
         return $query->where('temperature', LeadTemperature::HOT);
     }
+
+    /**
+     * Get direct WhatsApp URL with sanitized international number.
+     */
+    public function getWhatsAppUrl(?string $message = null): ?string
+    {
+        return \App\Support\WhatsAppHelper::buildUrl(
+            $this->phone,
+            $message ?? "Halo Bapak/Ibu {$this->name}, salam hangat dari tim konsultan properti."
+        );
+    }
+
+    /**
+     * Get pre-crafted WhatsApp message templates for this lead.
+     */
+    public function getWhatsAppTemplates(?User $sales = null): array
+    {
+        return \App\Support\WhatsAppHelper::getLeadTemplates($this, $sales);
+    }
 }
