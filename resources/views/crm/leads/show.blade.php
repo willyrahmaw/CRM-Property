@@ -56,6 +56,11 @@
                         <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold {{ $lead->temperature->badgeClass() }}">
                             <i class="fa-solid fa-fire text-[10px] mr-1"></i>{{ $lead->temperature->label() }}
                         </span>
+                        @if ($lead->gender)
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#F7F6F2] border border-[#E8E4DA] text-[#161616]">
+                                <i class="fa-solid {{ $lead->gender === \App\Enums\Gender::MALE ? 'fa-person text-blue-600' : 'fa-person-dress text-rose-500' }} mr-1"></i>{{ $lead->gender->label() }} ({{ $lead->salutation }})
+                            </span>
+                        @endif
                         @if ($lead->campaign)
                             <span class="px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#F7F6F2] border border-[#E8E4DA] text-[#79766F]">
                                 <i class="fa-solid fa-bullhorn text-[10px] mr-1"></i>{{ $lead->campaign }}
@@ -128,14 +133,19 @@
         <div class="lg:col-span-4 space-y-6">
             <!-- 1-Click WhatsApp Direct Connect Hub (Jemput Bola) -->
             <div class="bg-white rounded-xl border border-[#BBF7D0] p-5 shadow-xs bg-[#F0FDF4]/30">
-                <div class="flex items-center space-x-2.5 mb-3">
-                    <div class="w-8 h-8 rounded-lg bg-[#15803D] text-white flex items-center justify-center text-sm shadow-xs flex-shrink-0">
-                        <i class="fa-brands fa-whatsapp"></i>
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center space-x-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-[#15803D] text-white flex items-center justify-center text-sm shadow-xs flex-shrink-0">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xs font-bold text-[#161616] uppercase tracking-wider">1-Click WhatsApp Connect</h3>
+                            <p class="text-[10px] text-[#15803D] font-semibold">Jemput Bola Cepat Tanpa Simpan Nomor</p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-xs font-bold text-[#161616] uppercase tracking-wider">1-Click WhatsApp Connect</h3>
-                        <p class="text-[10px] text-[#15803D] font-semibold">Jemput Bola Cepat Tanpa Simpan Nomor</p>
-                    </div>
+                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#DCFCE7] border border-[#BBF7D0] text-[#15803D]">
+                        Sapaan: {{ $lead->salutation }}
+                    </span>
                 </div>
 
                 <!-- Main Direct WhatsApp Button -->

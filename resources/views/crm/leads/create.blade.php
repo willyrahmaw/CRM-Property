@@ -33,6 +33,20 @@
 
                     <div>
                         <label class="block text-xs font-semibold text-[#161616] uppercase mb-1">
+                            Jenis Kelamin <span class="text-[10px] text-[#15803D] font-normal lowercase">(sinkron sapaan Bapak/Ibu di WA)</span>
+                        </label>
+                        <select name="gender" class="w-full px-3 py-2 text-sm rounded-lg border border-[#E8E4DA] bg-white text-[#161616] focus:outline-none focus:border-[#B89B5E]">
+                            <option value="">-- Pilih Jenis Kelamin (Default: Bapak/Ibu) --</option>
+                            <option value="male" {{ old('gender') === 'male' ? 'selected' : '' }}>Laki-laki (Sapaan: Bapak)</option>
+                            <option value="female" {{ old('gender') === 'female' ? 'selected' : '' }}>Perempuan (Sapaan: Ibu)</option>
+                        </select>
+                        @error('gender')
+                            <p class="mt-1 text-xs text-[#991B1B]">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-[#161616] uppercase mb-1">
                             Nomor WhatsApp / Telepon <span class="text-[#991B1B]">*</span>
                         </label>
                         <input type="text" name="phone" value="{{ old('phone') }}" required
@@ -43,7 +57,7 @@
                         @enderror
                     </div>
 
-                    <div class="sm:col-span-2">
+                    <div>
                         <label class="block text-xs font-semibold text-[#161616] uppercase mb-1">
                             Alamat Email (Opsional)
                         </label>

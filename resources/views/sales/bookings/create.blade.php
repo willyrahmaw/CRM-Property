@@ -52,6 +52,7 @@
                                     @foreach ($customers as $c)
                                         <option value="{{ $c->id }}"
                                                 data-name="{{ $c->name }}"
+                                                data-gender="{{ $c->gender?->value ?? '' }}"
                                                 data-phone="{{ $c->phone }}"
                                                 data-email="{{ $c->email ?? '' }}"
                                                 data-nik="{{ $c->nik ?? '' }}"
@@ -74,6 +75,7 @@
                                     @foreach ($leads as $l)
                                         <option value="{{ $l->id }}"
                                                 data-name="{{ $l->name }}"
+                                                data-gender="{{ $l->gender?->value ?? '' }}"
                                                 data-phone="{{ $l->phone }}"
                                                 data-email="{{ $l->email ?? '' }}"
                                                 data-nik=""
@@ -124,6 +126,17 @@
                             @error('customer_phone')
                                 <p class="mt-1 text-xs text-[#991B1B]">{{ $message }}</p>
                             @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-[#161616] uppercase mb-1">
+                                Jenis Kelamin (Sapaan WA)
+                            </label>
+                            <select name="customer_gender" id="booking-customer-gender" class="w-full px-3 py-2 text-sm rounded-lg border border-[#E8E4DA] bg-white text-[#161616] focus:outline-none focus:border-[#B89B5E]">
+                                <option value="">-- Pilih Jenis Kelamin (Default: Bapak/Ibu) --</option>
+                                <option value="male" {{ old('customer_gender') === 'male' ? 'selected' : '' }}>Laki-laki (Sapaan: Bapak)</option>
+                                <option value="female" {{ old('customer_gender') === 'female' ? 'selected' : '' }}>Perempuan (Sapaan: Ibu)</option>
+                            </select>
                         </div>
 
                         <div>

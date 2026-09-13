@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\CRM;
 
+use App\Enums\Gender;
 use App\Enums\LeadSource;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,7 @@ class StoreLeadRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
+            'gender' => ['nullable', Rule::enum(Gender::class)],
             'phone' => ['required', 'string', 'max:30'],
             'email' => ['nullable', 'email', 'max:255'],
             'source' => ['required', Rule::enum(LeadSource::class)],

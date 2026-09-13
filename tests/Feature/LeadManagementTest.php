@@ -63,5 +63,28 @@ class LeadManagementTest extends TestCase
         $response->assertSee($lead->name);
         $response->assertSee($lead->code);
     }
+
+    public function test_lead_store_route_persists_gender_and_syncs_salutation(): void
+    {
+        $user = \App\Models\User::first();
+
+        $response = $this->actingAs($user)->post(route('crm.leads.store'), [
+            'name' => 'Siti Nurhaliza Test',
+            'gender' => 'female',
+            'phone' => '081288776655',
+            'email' => 'siti.gender.test@example.com',
+            'source' => LeadSource::INSTAGRAM->value,
+            'budget_min' => 500000000,
+            'budget_max' => 800000000,
+        ]);
+
+        $response->assertRedirect();
+
+        $lead = \App\Models\Lead::where('phone', '081288776655')->first();
+        $this->assertNotNull($lead);
+        $this->assertEquals(\App\Enums\Gender::FEMALE, $lead->gender);
+        $this->assertEquals('Ibu', $lead->salutation);
+        $this->assertStringContainsString('Halo%20Ibu%20Siti%20Nurhaliza%20Test', $lead->getWhatsAppUrl());
+    }
 }
 

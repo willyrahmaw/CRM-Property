@@ -94,6 +94,7 @@ class BookingController extends Controller
                 [
                     'company_id' => $user->company_id,
                     'name' => $request->customer_name ?: $lead->name,
+                    'gender' => $request->customer_gender ?: $lead->gender,
                     'phone' => $request->customer_phone ?: $lead->phone,
                     'email' => $request->customer_email ?: $lead->email,
                     'nik' => $request->customer_nik,
@@ -105,6 +106,7 @@ class BookingController extends Controller
                 'lead_id' => null,
                 'nik' => $request->customer_nik,
                 'name' => $request->customer_name,
+                'gender' => $request->customer_gender,
                 'phone' => $request->customer_phone,
                 'email' => $request->customer_email,
             ]);

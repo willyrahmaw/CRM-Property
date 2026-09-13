@@ -92,7 +92,7 @@
                         <div class="flex items-center gap-2">
                             <span class="font-semibold text-[#161616]">{{ $booking->customer->phone }}</span>
                             @if ($booking->customer->phone)
-                                <a href="{{ $booking->customer->getWhatsAppUrl("Halo Bapak/Ibu {$booking->customer->name}, menginformasikan mengenai perkembangan pemesanan unit {$booking->propertyUnit->unit_number} di {$booking->propertyUnit->cluster->project->name}...") }}"
+                                <a href="{{ $booking->customer->getWhatsAppUrl("Halo {$booking->customer->salutation} {$booking->customer->name}, menginformasikan mengenai perkembangan pemesanan unit {$booking->propertyUnit->unit_number} di {$booking->propertyUnit->cluster->project->name}...") }}"
                                    target="_blank"
                                    class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#DCFCE7] hover:bg-[#BBF7D0] text-[#15803D] text-[11px] font-bold transition-colors">
                                     <i class="fa-brands fa-whatsapp text-sm"></i>
@@ -101,6 +101,14 @@
                             @endif
                         </div>
                     </div>
+                    @if ($booking->customer->gender)
+                        <div>
+                            <span class="text-[#79766F] block text-[10px] uppercase font-bold">Jenis Kelamin</span>
+                            <span class="text-[#161616] font-medium">
+                                {{ $booking->customer->gender->label() }} (Sapaan: {{ $booking->customer->salutation }})
+                            </span>
+                        </div>
+                    @endif
                     @if ($booking->customer->nik)
                         <div>
                             <span class="text-[#79766F] block text-[10px] uppercase font-bold">NIK KTP</span>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Gender;
 use App\Enums\LeadSource;
 use App\Enums\LeadStatus;
 use App\Enums\LeadTemperature;
@@ -24,6 +25,7 @@ class Lead extends Model
         'assigned_sales_id',
         'code',
         'name',
+        'gender',
         'phone',
         'email',
         'source',
@@ -43,6 +45,7 @@ class Lead extends Model
     protected function casts(): array
     {
         return [
+            'gender' => Gender::class,
             'budget_min' => 'decimal:2',
             'budget_max' => 'decimal:2',
             'score' => 'integer',
@@ -51,6 +54,26 @@ class Lead extends Model
             'status' => LeadStatus::class,
             'temperature' => LeadTemperature::class,
         ];
+    }
+
+    /**
+     * Get polite Indonesian salutation (Bapak / Ibu / Bapak/Ibu).
+     */
+    public function getSalutationAttribute(): string
+    {
+        if ($this->gender instanceof Gender) {
+            return $this->gender->salutation();
+        }
+
+        if ($this->gender === Gender::MALE->value || $this->gender === 'male') {
+            return 'Bapak';
+        }
+
+        if ($this->gender === Gender::FEMALE->value || $this->gender === 'female') {
+            return 'Ibu';
+        }
+
+        return 'Bapak/Ibu';
     }
 
     public function assignedSales(): BelongsTo
@@ -98,9 +121,10 @@ class Lead extends Model
      */
     public function getWhatsAppUrl(?string $message = null): ?string
     {
+        $salutation = $this->salutation;
         return \App\Support\WhatsAppHelper::buildUrl(
             $this->phone,
-            $message ?? "Halo Bapak/Ibu {$this->name}, salam hangat dari tim konsultan properti."
+            $message ?? "Halo {$salutation} {$this->name}, salam hangat dari tim konsultan properti."
         );
     }
 

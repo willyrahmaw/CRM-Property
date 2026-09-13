@@ -6,6 +6,7 @@ export function initBookingForm() {
     const leadSelect = document.getElementById('booking-lead-select');
 
     const nameInput = document.getElementById('booking-customer-name');
+    const genderInput = document.getElementById('booking-customer-gender');
     const phoneInput = document.getElementById('booking-customer-phone');
     const nikInput = document.getElementById('booking-customer-nik');
     const emailInput = document.getElementById('booking-customer-email');
@@ -23,11 +24,13 @@ export function initBookingForm() {
         const selectedOption = selectElement.options[selectElement.selectedIndex];
         if (selectedOption && selectedOption.value) {
             const name = selectedOption.getAttribute('data-name') || '';
+            const gender = selectedOption.getAttribute('data-gender') || '';
             const phone = selectedOption.getAttribute('data-phone') || '';
             const email = selectedOption.getAttribute('data-email') || '';
             const nik = selectedOption.getAttribute('data-nik') || '';
 
             if (nameInput) nameInput.value = name;
+            if (genderInput && gender) genderInput.value = gender;
             if (phoneInput) phoneInput.value = phone;
             if (emailInput && email) emailInput.value = email;
             if (nikInput && nik) nikInput.value = nik;

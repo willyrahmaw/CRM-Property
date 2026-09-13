@@ -107,7 +107,7 @@
                                     </a>
                                     @if($visit->lead->phone)
                                         <div class="mt-0.5">
-                                            <a href="{{ $visit->lead->getWhatsAppUrl("Halo Bapak/Ibu {$visit->lead->name}, saya {$visit->sales->name} dari {$visit->project->name}. Mengonfirmasi jadwal survei lokasi unit properti pada " . $visit->visit_date->translatedFormat('l, d F Y') . " pukul " . $visit->visit_date->format('H:i') . " WIB. Apakah jadwalnya masih sesuai?") }}"
+                                            <a href="{{ $visit->lead->getWhatsAppUrl("Halo {$visit->lead->salutation} {$visit->lead->name}, saya {$visit->sales->name} dari {$visit->project->name}. Mengonfirmasi jadwal survei lokasi unit properti pada " . $visit->visit_date->translatedFormat('l, d F Y') . " pukul " . $visit->visit_date->format('H:i') . " WIB. Apakah jadwalnya masih sesuai?") }}"
                                                target="_blank"
                                                title="Chat WhatsApp Konfirmasi Jadwal Survei"
                                                class="inline-flex items-center gap-1 text-[11px] text-[#15803D] hover:text-[#166534] font-medium transition-colors">

@@ -23,6 +23,7 @@ class StoreBookingRequest extends FormRequest
 
             // If new customer without customer_id or lead_id
             'customer_name' => ['required_without_all:customer_id,lead_id', 'nullable', 'string', 'max:255'],
+            'customer_gender' => ['nullable', Rule::enum(\App\Enums\Gender::class)],
             'customer_phone' => ['required_without_all:customer_id,lead_id', 'nullable', 'string', 'max:30'],
             'customer_nik' => ['nullable', 'string', 'max:20'],
             'customer_email' => ['nullable', 'email', 'max:255'],

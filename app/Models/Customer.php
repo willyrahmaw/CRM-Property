@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Gender;
 use App\Support\Traits\BelongsToCompany;
 use App\Support\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,12 +20,40 @@ class Customer extends Model
         'lead_id',
         'nik',
         'name',
+        'gender',
         'phone',
         'email',
         'address',
         'occupation',
         'npwp',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'gender' => Gender::class,
+        ];
+    }
+
+    /**
+     * Get polite Indonesian salutation (Bapak / Ibu / Bapak/Ibu).
+     */
+    public function getSalutationAttribute(): string
+    {
+        if ($this->gender instanceof Gender) {
+            return $this->gender->salutation();
+        }
+
+        if ($this->gender === Gender::MALE->value || $this->gender === 'male') {
+            return 'Bapak';
+        }
+
+        if ($this->gender === Gender::FEMALE->value || $this->gender === 'female') {
+            return 'Ibu';
+        }
+
+        return 'Bapak/Ibu';
+    }
 
     public function lead(): BelongsTo
     {
@@ -46,9 +75,10 @@ class Customer extends Model
      */
     public function getWhatsAppUrl(?string $message = null): ?string
     {
+        $salutation = $this->salutation;
         return \App\Support\WhatsAppHelper::buildUrl(
             $this->phone,
-            $message ?? "Halo Bapak/Ibu {$this->name}, salam hangat dari pengembang properti."
+            $message ?? "Halo {$salutation} {$this->name}, salam hangat dari pengembang properti."
         );
     }
 

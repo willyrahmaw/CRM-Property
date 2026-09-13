@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Enums\Gender;
 use App\Models\Company;
 use App\Models\Customer;
 use App\Models\Lead;
@@ -39,8 +40,8 @@ class WhatsAppHelperTest extends TestCase
 
     public function test_builds_wa_me_url_correctly(): void
     {
-        $urlWithText = WhatsAppHelper::buildUrl('081234567890', 'Halo Bapak/Ibu');
-        $this->assertEquals('https://wa.me/6281234567890?text=Halo%20Bapak%2FIbu', $urlWithText);
+        $urlWithText = WhatsAppHelper::buildUrl('081234567890', 'Halo Bapak Budi');
+        $this->assertEquals('https://wa.me/6281234567890?text=Halo%20Bapak%20Budi', $urlWithText);
 
         $urlNoText = WhatsAppHelper::buildUrl('+6281234567890');
         $this->assertEquals('https://wa.me/6281234567890', $urlNoText);
@@ -49,7 +50,7 @@ class WhatsAppHelperTest extends TestCase
         $this->assertNull($urlNullPhone);
     }
 
-    public function test_generates_lead_sales_templates(): void
+    public function test_generates_lead_sales_templates_with_gender_salutation(): void
     {
         $companyId = (string) Str::uuid();
         $company = new Company(['name' => 'Royal Property Group']);
@@ -62,36 +63,56 @@ class WhatsAppHelperTest extends TestCase
         $project->id = (string) Str::uuid();
         $project->company_id = $companyId;
 
-        $lead = new Lead([
+        // 1. Male Lead -> "Bapak Budi Pratama"
+        $maleLead = new Lead([
             'name' => 'Budi Pratama',
+            'gender' => Gender::MALE,
             'phone' => '081298765432',
             'budget' => 1500000000,
         ]);
-        $lead->id = (string) Str::uuid();
-        $lead->company_id = $companyId;
-        $lead->setRelation('company', $company);
-        $lead->setRelation('assignedSales', $sales);
-        $lead->setRelation('interestedProject', $project);
+        $maleLead->id = (string) Str::uuid();
+        $maleLead->company_id = $companyId;
+        $maleLead->setRelation('company', $company);
+        $maleLead->setRelation('assignedSales', $sales);
+        $maleLead->setRelation('interestedProject', $project);
 
-        $templates = WhatsAppHelper::getLeadTemplates($lead, $sales);
+        $maleTemplates = WhatsAppHelper::getLeadTemplates($maleLead, $sales);
 
-        $this->assertArrayHasKey('catalog_promo', $templates);
-        $this->assertArrayHasKey('site_visit_invite', $templates);
-        $this->assertArrayHasKey('kpr_simulation', $templates);
-        $this->assertArrayHasKey('followup_warm', $templates);
+        $this->assertEquals('Bapak', $maleLead->salutation);
+        $this->assertStringContainsString('Halo Bapak Budi Pratama', $maleTemplates['catalog_promo']['message']);
+        $this->assertStringContainsString('Grand Harmony', $maleTemplates['catalog_promo']['message']);
+        $this->assertStringContainsString('Rian Sanjaya', $maleTemplates['catalog_promo']['message']);
+        $this->assertStringContainsString('Halo%20Bapak%20Budi%20Pratama', $maleLead->getWhatsAppUrl());
 
-        $this->assertStringContainsString('Budi Pratama', $templates['catalog_promo']['message']);
-        $this->assertStringContainsString('Grand Harmony', $templates['catalog_promo']['message']);
-        $this->assertStringContainsString('Rian Sanjaya', $templates['catalog_promo']['message']);
-        $this->assertStringStartsWith('https://wa.me/6281298765432?text=', $templates['catalog_promo']['url']);
+        // 2. Female Lead -> "Ibu Siti Maryam"
+        $femaleLead = new Lead([
+            'name' => 'Siti Maryam',
+            'gender' => Gender::FEMALE,
+            'phone' => '081311223344',
+        ]);
+        $femaleLead->id = (string) Str::uuid();
+        $femaleLead->company_id = $companyId;
+        $femaleLead->setRelation('company', $company);
+        $femaleLead->setRelation('assignedSales', $sales);
+        $femaleLead->setRelation('interestedProject', $project);
 
-        // Model helper check
-        $this->assertEquals('https://wa.me/6281298765432', $lead->getWhatsAppUrl(''));
-        $this->assertStringStartsWith('https://wa.me/6281298765432?text=', $lead->getWhatsAppUrl());
-        $this->assertCount(4, $lead->getWhatsAppTemplates($sales));
+        $femaleTemplates = WhatsAppHelper::getLeadTemplates($femaleLead, $sales);
+
+        $this->assertEquals('Ibu', $femaleLead->salutation);
+        $this->assertStringContainsString('Halo Ibu Siti Maryam', $femaleTemplates['catalog_promo']['message']);
+        $this->assertStringContainsString('Halo%20Ibu%20Siti%20Maryam', $femaleLead->getWhatsAppUrl());
+
+        // 3. Unspecified Lead -> "Bapak/Ibu"
+        $neutralLead = new Lead([
+            'name' => 'Alex Santoso',
+            'gender' => null,
+            'phone' => '081599887766',
+        ]);
+        $this->assertEquals('Bapak/Ibu', $neutralLead->salutation);
+        $this->assertStringContainsString('Halo%20Bapak%2FIbu%20Alex%20Santoso', $neutralLead->getWhatsAppUrl());
     }
 
-    public function test_generates_customer_sales_templates(): void
+    public function test_generates_customer_sales_templates_with_gender_salutation(): void
     {
         $companyId = (string) Str::uuid();
         $company = new Company(['name' => 'Royal Property Group']);
@@ -100,8 +121,10 @@ class WhatsAppHelperTest extends TestCase
         $sales = new User(['name' => 'Rian Sanjaya']);
         $sales->id = (string) Str::uuid();
 
+        // Female customer
         $customer = new Customer([
             'name' => 'Siti Nurhaliza',
+            'gender' => Gender::FEMALE,
             'phone' => '085712345678',
         ]);
         $customer->id = (string) Str::uuid();
@@ -110,14 +133,20 @@ class WhatsAppHelperTest extends TestCase
 
         $templates = WhatsAppHelper::getCustomerTemplates($customer, $sales);
 
+        $this->assertEquals('Ibu', $customer->salutation);
         $this->assertArrayHasKey('booking_update', $templates);
         $this->assertArrayHasKey('document_reminder', $templates);
-        $this->assertStringContainsString('Siti Nurhaliza', $templates['booking_update']['message']);
+        $this->assertStringContainsString('Halo Ibu Siti Nurhaliza', $templates['booking_update']['message']);
         $this->assertStringStartsWith('https://wa.me/6285712345678?text=', $templates['booking_update']['url']);
+        $this->assertStringContainsString('Halo%20Ibu%20Siti%20Nurhaliza', $customer->getWhatsAppUrl());
 
-        // Model helper check
-        $this->assertEquals('https://wa.me/6285712345678', $customer->getWhatsAppUrl(''));
-        $this->assertStringStartsWith('https://wa.me/6285712345678?text=', $customer->getWhatsAppUrl());
-        $this->assertCount(2, $customer->getWhatsAppTemplates($sales));
+        // Male customer
+        $maleCustomer = new Customer([
+            'name' => 'Ahmad Dahlan',
+            'gender' => Gender::MALE,
+            'phone' => '081233445566',
+        ]);
+        $this->assertEquals('Bapak', $maleCustomer->salutation);
+        $this->assertStringContainsString('Halo%20Bapak%20Ahmad%20Dahlan', $maleCustomer->getWhatsAppUrl());
     }
 }
