@@ -7,6 +7,7 @@ use App\Http\Controllers\CRM\PipelineController;
 use App\Http\Controllers\CRM\SiteVisitController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Finance\CommissionController;
+use App\Http\Controllers\Finance\MortgageController;
 use App\Http\Controllers\Finance\PaymentController;
 use App\Http\Controllers\Inventory\ClusterController;
 use App\Http\Controllers\Inventory\ProjectController;
@@ -132,9 +133,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/payments', [PaymentController::class, 'store'])->name('payments.store');
         Route::post('/payments/{payment}/verify', [PaymentController::class, 'verify'])->name('payments.verify')->middleware('role:finance_team');
 
-        Route::get('/mortgages', function () {
-            return redirect()->route('finance.payments.index')->with('info', 'Modul KPR terhubung langsung pada data pemesanan.');
-        })->name('mortgages.index')->middleware('role:finance_team');
+        Route::get('/mortgages', [MortgageController::class, 'index'])->name('mortgages.index')->middleware('role:finance_team');
+        Route::post('/mortgages', [MortgageController::class, 'store'])->name('mortgages.store')->middleware('role:finance_team');
+        Route::patch('/mortgages/{mortgage}', [MortgageController::class, 'update'])->name('mortgages.update')->middleware('role:finance_team');
 
         Route::get('/commissions', [CommissionController::class, 'index'])->name('commissions.index');
         Route::post('/bookings/{booking}/commissions/generate', [CommissionController::class, 'generate'])->name('commissions.generate')->middleware('role:managerial,finance_team');

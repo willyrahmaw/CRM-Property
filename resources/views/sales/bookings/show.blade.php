@@ -277,6 +277,86 @@
                 @endif
             </x-card>
 
+            <!-- KPR & Mortgage Status Card (if KPR Scheme or has Mortgage) -->
+            @if ($booking->payment_scheme === \App\Enums\PaymentScheme::KPR || $booking->mortgage)
+                <x-card title="Pembiayaan KPR & Realisasi Akad Kredit" subtitle="Status permohonan kredit pemilikan rumah perbankan dan jadwal akad">
+                    @if ($booking->mortgage)
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 p-4 rounded-xl bg-[#F7F6F2] border border-[#E8E4DA]">
+                                <div>
+                                    <span class="text-[10px] text-[#79766F] uppercase font-bold block">Bank Penyalur</span>
+                                    <div class="flex items-center gap-1.5 mt-1">
+                                        <i class="fa-solid fa-building-columns text-[#B89B5E] text-xs"></i>
+                                        <span class="font-bold text-[#161616] text-xs">{{ $booking->mortgage->bank_name }}</span>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <span class="text-[10px] text-[#79766F] uppercase font-bold block">Plafon Pengajuan</span>
+                                    <span class="font-bold text-[#161616] text-xs mt-1 block">Rp {{ number_format($booking->mortgage->submission_amount, 0, ',', '.') }}</span>
+                                    <span class="text-[10px] text-[#79766F]">{{ $booking->mortgage->tenor_years }} Thn @if($booking->mortgage->interest_rate) • {{ $booking->mortgage->interest_rate }}% @endif</span>
+                                </div>
+
+                                <div>
+                                    <span class="text-[10px] text-[#79766F] uppercase font-bold block">Plafon Disetujui (SP3K)</span>
+                                    @if ($booking->mortgage->approved_amount)
+                                        <span class="font-black text-[#15803D] text-xs mt-1 block">Rp {{ number_format($booking->mortgage->approved_amount, 0, ',', '.') }}</span>
+                                        @if ($booking->mortgage->sp3k_date)
+                                            <span class="text-[10px] text-[#79766F]">Tgl: {{ $booking->mortgage->sp3k_date->translatedFormat('d M Y') }}</span>
+                                        @endif
+                                    @else
+                                        <span class="text-xs text-[#79766F] mt-1 block italic">Menunggu SP3K</span>
+                                    @endif
+                                </div>
+
+                                <div>
+                                    <span class="text-[10px] text-[#79766F] uppercase font-bold block">Tahapan KPR</span>
+                                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold inline-block mt-1 {{ $booking->mortgage->status->badgeClass() }}">
+                                        {{ $booking->mortgage->status->label() }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            @if ($booking->mortgage->contract_date)
+                                <div class="p-3 rounded-xl bg-[#DCFCE7] border border-[#86EFAC] flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <i class="fa-solid fa-handshake text-[#15803D] text-base"></i>
+                                        <div>
+                                            <span class="font-bold text-[#15803D] text-xs block">Akad Kredit Selesai Dilaksanakan</span>
+                                            <span class="text-[11px] text-[#166534]">Tanggal Realisasi Akad: {{ $booking->mortgage->contract_date->translatedFormat('d F Y') }}</span>
+                                        </div>
+                                    </div>
+                                    <span class="px-2 py-0.5 rounded bg-[#15803D] text-white text-[10px] font-bold uppercase">Contract Signed</span>
+                                </div>
+                            @endif
+
+                            @if (auth()->user()->isFinance() || auth()->user()->isManagerial())
+                                <div class="flex justify-end pt-1">
+                                    <a href="{{ route('finance.mortgages.index', ['search' => $booking->booking_number]) }}"
+                                       class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#161616] hover:bg-[#262626] text-white text-xs font-semibold transition-colors">
+                                        <i class="fa-solid fa-landmark"></i> Kelola di KPR Management & Akad
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
+                    @else
+                        <div class="p-4 rounded-xl bg-[#F7F6F2] border border-[#E8E4DA] text-center space-y-2">
+                            <i class="fa-solid fa-landmark text-[#B89B5E] text-lg block"></i>
+                            <span class="text-xs font-bold text-[#161616] block">Transaksi ini Menggunakan Skema Pembiayaan KPR</span>
+                            <p class="text-[11px] text-[#79766F]">Data pengajuan berkas bank belum diinput ke dalam sistem.</p>
+                            @if (auth()->user()->isFinance() || auth()->user()->isManagerial())
+                                <div class="pt-2">
+                                    <a href="{{ route('finance.mortgages.index') }}"
+                                       class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#B89B5E] hover:bg-[#A3884E] text-white text-xs font-bold transition-colors">
+                                        <i class="fa-solid fa-plus"></i> Input Pengajuan KPR di Modul Finance
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
+                    @endif
+                </x-card>
+            @endif
+
             <!-- Commission Distribution Card -->
             <x-card title="Distribusi Komisi Penjualan" subtitle="Perhitungan komisi berjenjang dari nilai final transaksi unit properti">
                 @if ($booking->commissions->isEmpty())

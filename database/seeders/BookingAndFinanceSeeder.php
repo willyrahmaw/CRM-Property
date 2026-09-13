@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Enums\BookingStatus;
 use App\Enums\CommissionStatus;
+use App\Enums\MortgageStatus;
 use App\Enums\PaymentScheme;
 use App\Enums\PaymentStatus;
 use App\Enums\PaymentType;
@@ -13,6 +14,7 @@ use App\Models\Booking;
 use App\Models\Commission;
 use App\Models\Company;
 use App\Models\Customer;
+use App\Models\Mortgage;
 use App\Models\Payment;
 use App\Models\PropertyUnit;
 use App\Models\User;
@@ -79,6 +81,37 @@ class BookingAndFinanceSeeder extends Seeder
                     'notes' => 'Dana masuk rekening BCA PT Grand Harmony Land.',
                 ]
             );
+
+            // Seed Mortgage record if payment scheme is KPR
+            if ($booking->payment_scheme === PaymentScheme::KPR) {
+                $banks = ['Bank Mandiri', 'Bank Central Asia (BCA)', 'Bank BTN (Persero)'];
+                $bankName = $banks[$b % count($banks)];
+                $submissionAmount = round($booking->final_price * 0.85); // 85% plafon
+                $approvedAmount = ($b === 0 || $b === 2) ? $submissionAmount : null;
+                $status = match ($b) {
+                    0 => MortgageStatus::CONTRACT_SIGNED, // Akad Kredit Selesai
+                    2 => MortgageStatus::APPROVED,        // SP3K Disetujui
+                    default => MortgageStatus::APPRAISAL, // Sedang Penilaian Bank
+                };
+
+                Mortgage::updateOrCreate(
+                    ['booking_id' => $booking->id],
+                    [
+                        'bank_name' => $bankName,
+                        'submission_amount' => $submissionAmount,
+                        'approved_amount' => $approvedAmount,
+                        'tenor_years' => 15,
+                        'interest_rate' => 6.25,
+                        'estimated_installment' => round($submissionAmount * 0.0085),
+                        'status' => $status,
+                        'application_date' => now()->subDays(15)->toDateString(),
+                        'appraisal_date' => now()->subDays(10)->toDateString(),
+                        'sp3k_date' => ($b === 0 || $b === 2) ? now()->subDays(5)->toDateString() : null,
+                        'contract_date' => ($b === 0) ? now()->subDays(2)->toDateString() : null,
+                        'notes' => ($b === 0) ? 'Akad kredit selesai dilaksanakan di hadapan Notaris & Bank.' : 'Proses berkas lancar, appraisal sudah selesai.',
+                    ]
+                );
+            }
 
             // Generate Multi-Tier Commissions
             $totalComm = ($booking->final_price * 2.5) / 100;
